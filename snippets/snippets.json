@@ -1,0 +1,57 @@
+{
+	// DOC: https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets
+
+	// summation
+	"sum": {
+		"description": "sum",
+		"prefix":      "sum",
+		"body":        "sum [${1:i}=${2:start}:${3:end}] ${4:expression}",
+		"scope":       "source.gnuplot"
+	},
+	"for": {
+		"description": "for",
+		"prefix":      "for",
+		"body":        "for [${1:i}=${2:start}:${3:end}${4::${5:step}}] ${6:expression}",
+		"scope":       "source.gnuplot"
+	},
+	"foreach": {
+		"description": "foreach",
+		"prefix":      "foreach",
+		"body":        "for [${1:i} in \"${2:words}\"] ${3:expression}",
+		"scope":       "source.gnuplot"
+	},
+
+	// control-flow
+	"if": {
+		"description": "if",
+		"prefix":      "if",
+		"body":        "if (${1:expression}) {\n\t$0\n}",
+		"scope":       "source.gnuplot"
+	},
+	"while": {
+		"description": "while",
+		"prefix":      "while",
+		"body":        "while (${1:expression}) {\n\t$0\n}",
+		"scope":       "source.gnuplot"
+	},
+
+	"term": {
+		"description": "term",
+		"prefix":      "term",
+		"body": [
+			"set terminal ${1:pdfcairo}${2: size ${3:5,3} }",
+			"set output \"${4:${5:plot}.pdf}\"",
+			"$0"
+		],
+		"scope":       "source.gnuplot"
+	},
+
+	// other
+	"import": {
+		"prefix":      "import",
+		"body":        "import ${1:function} from '${2:library}'",
+		"description": "import",
+		"scope":       "source.gnuplot"
+	}
+}
+

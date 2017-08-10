@@ -1,0 +1,37 @@
+{
+	"name":         "gnuplot",
+	"displayName":  "GnuPlot",
+	"description":  "GnuPlot language support for VS Code",
+	"version":      "0.1.0",
+	"publisher":    "MarioSchwalbe",
+	"icon":         "logo.svg",
+	"engines": {
+		"vscode":   "^1.0.0"
+	},
+	"categories":   [ "Languages", "Snippets" ],
+	"contributes": {
+		"languages": [
+			{
+				"id":            "gnuplot",
+				"aliases":       [ "GnuPlot", "Gnuplot", "gnuplot" ],
+				"extensions":    [ ".gp", ".gnu", ".plt", ".plot", ".gnuplot" ],
+				"firstLine":     "^#!/.*\\bgnuplot\\b",
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language":      "gnuplot",
+				"scopeName":     "source.gnuplot",
+				"path":          "./syntaxes/gnuplot.tmLanguage"
+			}
+		],
+		"snippets": [
+			{
+				"language":      "gnuplot",
+				"path":          "./snippets/snippets.json"
+			}
+		]
+	}
+}
+

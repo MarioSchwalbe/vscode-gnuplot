@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+		DOC: https://code.visualstudio.com/docs/extensions/themes-snippets-colorizers
+		DOC: https://www.sublimetext.com/docs/3/scope_naming.html
+		DOC: https://manual.macromates.com/en/language_grammars
+		DOC: https://www.rexegg.com/
+	-->
+
+	<key>name</key>
+	<string>gnuplot</string>
+	<key>scopeName</key>
+	<string>source.gnuplot</string>
+	<key>uuid</key>
+	<string>A75AB1C2-611C-4500-9EE4-20668B5BB465</string>
+
+	<key>fileTypes</key>
+	<array>
+		<string>gp</string>
+		<string>gnu</string>
+		<string>plt</string>
+		<string>plot</string>
+		<string>gnuplot</string>
+	</array>
+
+	<key>patterns</key>
+	<array>
+		<!-- Simplifies other rules a bit. -->
+		<dict>
+			<key>name</key>
+			<string>punctuation.separator.statement.gnuplot</string>
+			<key>match</key>
+			<string>(;)</string>
+		</dict>
+		<dict><key>include</key><string>#LineComment</string></dict>
+
+		<!-- Toplevel declarations: -->
+		<dict><key>include</key><string>#DataBlock</string></dict>
+		<dict><key>include</key><string>#MacroExpansion</string></dict>
+		<dict><key>include</key><string>#VariableDecl</string></dict>
+		<dict><key>include</key><string>#FunctionDecl</string></dict>
+		<dict><key>include</key><string>#Commands</string></dict>
+	</array>
+
+<!--
+# *************************************************************************************************
+# ****************************************** Repository *******************************************
+# *************************************************************************************************
+--->
+
+	<key>repository</key>
+	<dict>
+
+		<!-- DataBlock -->
+		<key>DataBlock</key>
+		<dict>
+			<key>begin</key>
+			<string>(?x:
+				([$][A-Za-z_]\w*)\s*             # 1: var name
+				(&lt;&lt;)\s*                    # 2: << operator
+				([A-Za-z_]\w*)\s*                # 3: end tag
+				(?=(\#|$))                       # 4: comment or end of line
+			)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#SpecialVariables</string></dict>
+					</array>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>constant.language.datablock.gnuplot</string>
+				</dict>
+			</dict>
+
+			<!-- Note: Must be at beginning of line. Consumes everything otherwise. -->
+			<key>end</key>
+			<string>^(\3)\b</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>constant.language.datablock.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<!-- Usual line comments as in data files do work here. -->
+				<dict><key>include</key><string>#LineComment</string></dict>
+			</array>
+		</dict>
+
+		<!-- MacroExpansion -->
+		<key>MacroExpansion</key>
+		<dict>
+			<key>begin</key>
+			<string>([@][A-Za-z_]\w*)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#SpecialVariables</string></dict>
+					</array>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(?=(#|;|$))</string>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Expressions</string></dict>
+			</array>
+		</dict>
+
+		<!-- VariableDecl -->
+		<key>VariableDecl</key>
+		<dict>
+			<key>name</key>
+			<string>meta.variable.gnuplot</string>
+
+			<key>begin</key>
+			<string>\b(?x:
+				([A-Za-z_]\w*)\s*                # 1: var name
+				(=)(?!\s*=)                      # 2: assignment
+			)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.variable.gnuplot</string>
+					<key>patterns</key>
+					<array>
+						<!-- FIXME: Try to not repeat regexes here! -->
+						<dict>
+							<key>name</key>
+							<string>invalid.illegal.variable.gnuplot</string>
+							<key>match</key>
+							<string>\b(GPVAL_\w*|MOUSE_\w*)\b</string>
+						</dict>
+					</array>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#BuiltinOperators</string></dict>
+					</array>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(?=(#|;|$))</string>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Expressions</string></dict>
+			</array>
+		</dict>
+
+		<!-- FunctionDecl -->
+		<key>FunctionDecl</key>
+		<dict>
+			<key>name</key>
+			<string>meta.function.gnuplot</string>
+
+			<key>begin</key>
+			<string>\b(?x:
+				([A-Za-z_]\w*)\s*                # 1: func name
+				(                                # 2: parameter list
+					(\()\s*                      # 3: opening parens
+					([A-Za-z_]\w*)\s*            # 4: arg name
+					(                            # 5: --
+						(,)\s*                   # 6: comma
+						([A-Za-z_]\w*)\s*        # 7: other args
+					)*
+					(\))                         # 8: closing parens
+				)\s*
+				(=)(?!\s*=)                      # 9: assignment
+			)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<!--
+						FIXME: Highlight invalid function names.
+						How to get built-in function list in here?
+					-->
+					<key>name</key>
+					<string>entity.name.function.gnuplot</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>meta.function.parameters.gnuplot</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.begin.gnuplot</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.language.gnuplot</string>
+				</dict>
+				<key>6</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.separator.parameters.gnuplot</string>
+				</dict>
+				<key>7</key>
+				<dict>
+					<key>name</key>
+					<string>variable.parameter.function.language.gnuplot</string>
+				</dict>
+				<key>8</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.parameters.end.gnuplot</string>
+				</dict>
+				<key>9</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#BuiltinOperators</string></dict>
+					</array>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(?=(#|;|$))</string>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Expressions</string></dict>
+			</array>
+		</dict>
+
+<!--
+# *************************************************************************************************
+# ******************************************* Commands ********************************************
+# *************************************************************************************************
+--->
+
+		<!-- Commands -->
+		<key>Commands</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<!-- Simple commands -->
+				<dict>
+					<key>begin</key>
+					<string>\b(?x:
+						cd           |
+						call         |
+						clear        |
+						eval         |
+						exit         |
+						fit          |
+						help         |
+						history      |
+						load         |
+						lower        |
+						pause        |
+						print        |
+						printerr     |
+						pwd          |
+						quit         |
+						raise        |
+						refresh      |
+						replot       |
+						reread       |
+						reset        |
+						save         |
+						shell        |
+						stats        |
+						system       |
+						test         |
+						undefine     |
+						update
+					)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(#|;|$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#Expressions</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: If & While -->
+				<dict>
+					<key>begin</key>
+					<string>\b(if|while)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.flow.gnuplot</string>
+						</dict>
+					</dict>
+
+					<!-- Note: Include newline for old-style syntax. -->
+					<key>end</key>
+					<string>(?=(#|\{|$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#Expressions</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: Else -->
+				<dict>
+					<key>begin</key>
+					<string>\b(else)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.flow.gnuplot</string>
+						</dict>
+					</dict>
+
+					<!-- Note: Include newline for old-style syntax. -->
+					<key>end</key>
+					<string>(?=(#|\{|$))</string>
+				</dict>
+
+				<!-- Command: Do -->
+				<dict>
+					<key>begin</key>
+					<string>\b(do)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.flow.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(#|\{|$))</string>
+
+					<!-- Note: Requires for-iteration. -->
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#ForIterationExpr</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: Show -->
+				<dict>
+					<key>begin</key>
+					<string>\b(show)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(#|;|$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#SetUnsetOptions</string></dict>
+						<dict><key>include</key><string>#Expressions</string></dict>
+						<dict>
+							<!-- same as: SetUnsetOptions -->
+							<key>name</key>
+							<string>support.class.options.gnuplot</string>
+							<key>match</key>
+							<string>\b(all|variables)\b</string>
+						</dict>
+					</array>
+				</dict>
+
+				<!-- Command: Set & Unset -->
+				<dict>
+					<key>begin</key>
+					<string>\b(set|unset)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(#|;|$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#SetUnsetOptions</string></dict>
+						<dict><key>include</key><string>#ForIterationExpr</string></dict>
+						<dict><key>include</key><string>#Expressions</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: Plot & Splot -->
+				<dict>
+					<key>begin</key>
+					<string>\b(plot|splot)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(#|;|$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#PlotModifiers</string></dict>
+						<dict><key>include</key><string>#ForIterationExpr</string></dict>
+						<dict><key>include</key><string>#Expressions</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: Import -->
+				<dict>
+					<key>begin</key>
+					<!-- Note: No trailing space required. -->
+					<string>\b(import)\s(.+)\s(from)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.import.gnuplot</string>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.import.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(#|;|$))</string>
+
+					<key>patterns</key>
+					<array>
+						<!-- Note: Arbitrary expressions not allowed. -->
+						<dict><key>include</key><string>#SingleQuotedStringLiteral</string></dict>
+						<dict><key>include</key><string>#DoubleQuotedStringLiteral</string></dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- SetUnsetOptions -->
+		<key>SetUnsetOptions</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>support.class.options.gnuplot</string>
+					<key>match</key>
+					<string>\G\s*\b(?x:
+						angles              |
+						arrow               |
+						autoscale           |
+						bars                |
+						border              |
+						boxwidth            |
+						color               |
+						colorsequence       |
+						clip                |
+						cntrlabel           |
+						contrlabel          |
+						cntrparam           |
+						colorbox            |
+						contour             |
+						dashtype            |
+						datafile            |
+						decimalsign         |
+						dgrid3d             |
+						dummy               |
+						encoding            |
+						fit                 |
+						fontpath            |
+						format              |
+						grid                |
+						hidden3d            |
+						history             |
+						isosamples          |
+						key                 |
+						label               |
+						linetype            |
+						link                |
+						loadpath            |
+						locale              |
+						logscale            |
+						macros              |
+						mapping             |
+						[lrtb]margin        |
+						margins             |
+						micro               |
+						minus(sign)?        |
+						mono(chrome)?       |
+						mouse               |
+						multiplot           |
+						object              |
+						offsets             |
+						origin              |
+						output              |
+						parametric          |
+						paxis               |
+						pm3d                |
+						palette             |
+						pointintervalbox    |
+						pointsize           |
+						polar               |
+						print               |
+						psdir               |
+						raxis               |
+						samples             |
+						size                |
+						style               |
+						surface             |
+						table               |
+						terminal            |
+						termoption          |
+						tics                |
+						timestamp           |
+						timefmt             |
+						title               |
+						tmargin             |
+						view                |
+						xyplane             |
+						zero                |
+						(no)?(m)?(x|x2|y|y2|z|cb|r)tics  |
+						(x|x2|y|y2|z|cb)data             |
+						(x|x2|y|y2|z|cb)label            |
+						(x|x2|y|y2|z|cb)dtics            |
+						(x|x2|y|y2|z|cb)mtics            |
+						(x|x2|y|y2|z|cb|[rtuv])range     |
+						(x|x2|y|y2|z)?zeroaxis
+					)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>invalid.deprecated.options.gnuplot</string>
+					<key>match</key>
+					<string>\b(?x:
+						clabel              |
+						historysize         |
+						ticslevel           |
+						ticscale
+					)\b</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- PlotModifiers -->
+		<key>PlotModifiers</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>storage.type.plot.gnuplot</string>
+					<key>match</key>
+					<string>\b(newhist(ogram)?)\b</string>
+				</dict>
+				<dict>
+					<!-- One letter abbreviation would also match common iterator vars. -->
+					<key>name</key>
+					<string>storage.type.plot.gnuplot</string>
+					<key>match</key>
+					<string>\b(?x:
+						every               |
+						in(dex)?            |
+						us(ing)?            |
+						wi(th)?             |
+						via
+					)\b</string>
+				</dict>
+			</array>
+		</dict>
+
+<!--
+# *************************************************************************************************
+# ****************************************** Expressions ******************************************
+# *************************************************************************************************
+--->
+
+		<!-- ForIterationExpr -->
+		<key>ForIterationExpr</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<!-- for [ i in 'A B C' ] -->
+				<dict>
+					<key>begin</key>
+					<string>\b(?x:
+						(for)\s*                 # 1: for
+						(\[)\s*                  # 2: opening bracket
+						([A-Za-z_]\w*)\s+        # 3: var name
+						(in)\b                   # 4: assignment
+					)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.flow.gnuplot</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict><key>include</key><string>#RangeSeparators</string></dict>
+							</array>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.iterator.gnuplot</string>
+						</dict>
+						<key>4</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.operator.assignment.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(\]|(?=(#|$)))</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict><key>include</key><string>#RangeSeparators</string></dict>
+							</array>
+						</dict>
+					</dict>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#Expressions</string></dict>
+					</array>
+				</dict>
+
+				<!-- for [ i = 1:2:3 ] -->
+				<dict>
+					<key>begin</key>
+					<string>\b(?x:
+						(for)\s*                 # 1: for
+						(\[)\s*                  # 2: opening bracket
+						([A-Za-z_]\w*)\s*        # 3: var name
+						(=)(?!\s*=)              # 4: assignment
+					)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.flow.gnuplot</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict><key>include</key><string>#RangeSeparators</string></dict>
+							</array>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>variable.other.iterator.gnuplot</string>
+						</dict>
+						<key>4</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict><key>include</key><string>#BuiltinOperators</string></dict>
+							</array>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(\]|(?=(#|$)))</string>
+					<key>endCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict><key>include</key><string>#RangeSeparators</string></dict>
+							</array>
+						</dict>
+					</dict>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#Expressions</string></dict>
+						<dict><key>include</key><string>#RangeSeparators</string></dict>
+					</array>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- Expressions:
+				+ Includes assignments (via BuiltinOperators)
+				+ No for-iteration expressions (not permitted everywhere)
+		-->
+		<key>Expressions</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Literals</string></dict>
+				<dict><key>include</key><string>#Builtins</string></dict>
+				<dict><key>include</key><string>#SpecialVariables</string></dict>
+				<dict><key>include</key><string>#SummationExpr</string></dict>
+				<dict><key>include</key><string>#TernaryExpression</string></dict>
+			</array>
+		</dict>
+
+		<!-- SummationExpr: sum [ i = 1:2 ] -->
+		<key>SummationExpr</key>
+		<dict>
+			<key>begin</key>
+			<string>\b(?x:
+				(sum)\s*                         # 1: sum
+				(\[)\s*                          # 2: opening bracket
+				([A-Za-z_]\w*)\s*                # 3: var name
+				(=)(?!\s*=)                      # 4: assignment
+			)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.sum.gnuplot</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#RangeSeparators</string></dict>
+					</array>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>name</key>
+					<string>variable.other.iterator.gnuplot</string>
+				</dict>
+				<key>4</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#BuiltinOperators</string></dict>
+					</array>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(\]|(?=(#|$)))</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#RangeSeparators</string></dict>
+					</array>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Expressions</string></dict>
+				<dict><key>include</key><string>#RangeSeparators</string></dict>
+			</array>
+		</dict>
+
+		<!-- TernaryExpression (Is actually an operator, but references others). -->
+		<key>TernaryExpression</key>
+		<dict>
+			<key>begin</key>
+			<string>(?<!\?)(\?)(?!\?)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.ternary.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(?=(#|(?<!:)(:)(?!:)|$))</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.ternary.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Expressions</string></dict>
+			</array>
+		</dict>
+
+		<!-- SpecialVariables -->
+		<key>SpecialVariables</key>
+		<dict>
+			<key>name</key>
+			<string>constant.language.special.gnuplot</string>
+			<key>match</key>
+			<string>(([@$])[A-Za-z_]\w*)\b</string>
+			<key>captures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.variable.gnuplot</string>
+				</dict>
+			</dict>
+		</dict>
+
+<!--
+# *************************************************************************************************
+# ******************************************* Built-ins *******************************************
+# *************************************************************************************************
+--->
+
+		<!-- RangeSeparators -->
+		<key>RangeSeparators</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>punctuation.section.brackets.begin.gnuplot</string>
+					<key>match</key>
+					<string>(\[)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>punctuation.separator.range.gnuplot</string>
+					<key>match</key>
+					<string>(:)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>punctuation.section.brackets.end.gnuplot</string>
+					<key>match</key>
+					<string>(\])</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- Builtins -->
+		<key>Builtins</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#BuiltinOperators</string></dict>
+				<dict><key>include</key><string>#BuiltinVariables</string></dict>
+				<dict><key>include</key><string>#BuiltinFunctions</string></dict>
+			</array>
+		</dict>
+
+		<!-- BuiltinOperators -->
+		<key>BuiltinOperators</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.logical.gnuplot</string>
+					<key>match</key>
+					<string>(&amp;&amp;|\|\|)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.bitwise.gnuplot</string>
+					<key>match</key>
+					<string>(&lt;&lt;|&gt;&gt;|&amp;|\||\^)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.comparison.gnuplot</string>
+					<key>match</key>
+					<string>(==|!=|&lt;|&lt;=|&gt;|&gt;=)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.gnuplot</string>
+					<key>match</key>
+					<string>(=)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.unary.gnuplot</string>
+					<key>match</key>
+					<string>(\+|-|~|!)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.arithmetic.gnuplot</string>
+					<key>match</key>
+					<string>(\+|-|\*|/|%|\*\*)</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.strings.gnuplot</string>
+					<key>match</key>
+					<string>(\.|\b(eq|ne)\b)</string>
+					<key>captures</key>
+					<dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.operator.word.gnuplot</string>
+						</dict>
+					</dict>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- BuiltinVariables -->
+		<key>BuiltinVariables</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>support.constant.gnuplot</string>
+					<key>match</key>
+					<string>\b(GPVAL_\w*|MOUSE_\w*)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>support.variable.gnuplot</string>
+					<key>match</key>
+					<string>\b(ARG[0-9C]|FIT_\w*|STATS_\w*|pi|NaN)\b</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- BuiltinFunctions -->
+		<key>BuiltinFunctions</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>support.function.math.gnuplot</string>
+					<key>match</key>
+					<string>\b(?x:
+						abs            |
+						abs            |
+						acos           |
+						acosh          |
+						airy           |
+						arg            |
+						asin           |
+						asinh          |
+						atan           |
+						atan2          |
+						atanh          |
+						EllipticK      |
+						EllipticE      |
+						EllipticPi     |
+						besj0          |
+						besj1          |
+						besy0          |
+						besy1          |
+						ceil           |
+						cos            |
+						cosh           |
+						erf            |
+						erfc           |
+						exp            |
+						expint         |
+						floor          |
+						gamma          |
+						ibeta          |
+						inverf         |
+						igamma         |
+						imag           |
+						invnorm        |
+						int            |
+						lambertw       |
+						lgamma         |
+						log            |
+						log10          |
+						norm           |
+						rand           |
+						real           |
+						sgn            |
+						sin            |
+						sinh           |
+						sqrt           |
+						tan            |
+						tanh           |
+						voigt          |
+						cerf           |
+						cdawson        |
+						faddeeva       |
+						erfi           |
+						VP
+					)(?=\s*\()</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>support.function.strings.gnuplot</string>
+					<key>match</key>
+					<string>\b(?x:
+						gprintf        |
+						sprintf        |
+						strlen         |
+						strstrt        |
+						substr         |
+						strftime       |
+						strptime       |
+						system         |
+						word           |
+						words
+					)(?=\s*\()</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>support.function.other.gnuplot</string>
+					<key>match</key>
+					<string>\b(?x:
+						column         |
+						columnhead     |
+						exists         |
+						hsv2rgb        |
+						stringcolumn   |
+						timecolumn     |
+						tm_hour        |
+						tm_mday        |
+						tm_min         |
+						tm_mon         |
+						tm_sec         |
+						tm_wday        |
+						tm_yday        |
+						tm_year        |
+						time           |
+						valid          |
+						value
+					)(?=\s*\()</string>
+				</dict>
+			</array>
+		</dict>
+
+<!--
+# *************************************************************************************************
+# ******************************************* Literals ********************************************
+# *************************************************************************************************
+--->
+
+		<!-- Literals -->
+		<key>Literals</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#NumberLiterals</string></dict>
+				<dict><key>include</key><string>#ColumnIndexLiteral</string></dict>
+				<dict><key>include</key><string>#SingleQuotedStringLiteral</string></dict>
+				<dict><key>include</key><string>#DoubleQuotedStringLiteral</string></dict>
+				<dict><key>include</key><string>#InterpolatedStringLiteral</string></dict>
+			</array>
+		</dict>
+
+		<!-- NumberLiterals -->
+		<key>NumberLiterals</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.float.gnuplot</string>
+					<key>match</key>
+					<string>(?x:
+						( ((\b[0-9]+)|)[.][0-9]+ )    # optional num and non-optional frac
+						( [Ee][+-]?[0-9]+ )?          # optional exponent
+					)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.hex.gnuplot</string>
+					<key>match</key>
+					<string>\b(0[Xx][0-9a-fA-F]+)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.dec.gnuplot</string>
+					<key>match</key>
+					<string>\b(0+)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.oct.gnuplot</string>
+					<key>match</key>
+					<string>\b(0[0-7]+)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>invalid.illegal.dec.gnuplot</string>
+					<key>match</key>
+					<string>\b(0[0-9]+)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.dec.gnuplot</string>
+					<key>match</key>
+					<string>\b([0-9]+)\b</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!--
+		FIXME: No complex number literal. I use rainbow brackets anyway.
+		--->
+
+		<!-- ColumnIndexLiteral -->
+		<key>ColumnIndexLiteral</key>
+		<dict>
+			<key>name</key>
+			<string>constant.language.column.gnuplot</string>
+			<key>match</key>
+			<string>[$](0|(?!0)[0-9]+)\b</string>
+		</dict>
+
+		<!-- SingleQuotedStringLiteral -->
+		<key>SingleQuotedStringLiteral</key>
+		<dict>
+			<key>name</key>
+			<string>string.quoted.single.gnuplot</string>
+
+			<key>begin</key>
+			<string>(')</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>('(?!')|$)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#RGBColorSpec</string></dict>
+				<dict>
+					<key>name</key>
+					<string>constant.character.escape.gnuplot</string>
+					<key>match</key>
+					<string>('')</string>
+				</dict>
+			</array>
+		</dict>
+
+		<!-- DoubleQuotedStringLiteral -->
+		<key>DoubleQuotedStringLiteral</key>
+		<dict>
+			<key>name</key>
+			<string>string.quoted.double.gnuplot</string>
+
+			<key>begin</key>
+			<string>(")</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>("|$)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#EscapedChar</string></dict>
+				<dict><key>include</key><string>#RGBColorSpec</string></dict>
+				<dict><key>include</key><string>#InterpolatedStringLiteral</string></dict>
+			</array>
+		</dict>
+
+		<!-- InterpolatedStringLiteral -->
+		<key>InterpolatedStringLiteral</key>
+		<dict>
+			<key>name</key>
+			<string>string.interpolated.single.gnuplot</string>
+
+			<key>begin</key>
+			<string>(`)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(`|$)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#EscapedChar</string></dict>
+			</array>
+		</dict>
+
+		<!-- RGBColorSpec -->
+		<key>RGBColorSpec</key>
+		<dict>
+			<key>name</key>
+			<string>constant.other.placeholder.gnuplot</string>
+			<key>match</key>
+			<string>#(([0-9a-fA-F]{8})|([0-9a-fA-F]{6}))\b</string>
+		</dict>
+
+		<!-- EscapedChar -->
+		<key>EscapedChar</key>
+		<dict>
+			<key>name</key>
+			<string>constant.character.escape.gnuplot</string>
+			<key>match</key>
+			<string>(\\.)</string>
+		</dict>
+
+<!--
+# *************************************************************************************************
+# ******************************************* Comments ********************************************
+# *************************************************************************************************
+--->
+
+		<!-- LineComment -->
+		<key>LineComment</key>
+		<dict>
+			<key>name</key>
+			<string>comment.line.number-sign.gnuplot</string>
+
+			<key>begin</key>
+			<string>(#)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.begin.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>($)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.end.gnuplot</string>
+				</dict>
+			</dict>
+		</dict>
+
+	</dict>
+</dict>
+</plist>
+
