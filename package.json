@@ -15,7 +15,9 @@
 		"url":      "https://github.com/MarioSchwalbe/vscode-gnuplot.git",
 		"type":     "git"
 	},
-
+	"engines": {
+		"vscode":   "^1.15.0"
+	},
 	"contributes": {
 		"languages": [
 			{
@@ -55,16 +57,14 @@
 				"owner":            "gnuplot",
 				"fileLocation":     [ "relative", "${workspaceRoot}" ],
 				"pattern": {
-					"regexp":       "^\"(.*)\",\\s+line\\s+(\\d+):\\s*(.*)$",
+					"regexp":       "^\"(.*)\",\\s*line\\s+(\\d+):(?:\\s*(warning):.*?:)?\\s*(.*)$",
 					"file":         1,
 					"line":         2,
-					"message":      3
+					"severity":     3,
+					"message":      4
 				}
 			}
 		]
-	},
-	"engines": {
-		"vscode": "^1.15.0"
 	}
 }
 
