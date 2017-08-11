@@ -216,7 +216,7 @@ do for [name in text(0x00).strlen('Mario')] {
 }
 
 # Gnuplot 5.0 supports this!
-do for [do=strlen('abc') : end=sum [j=1:4] j : for=(2 > 1)?2:1] {
+do for [do=strlen('abc') : end=sum [j=1:4] j : for=(2>1)?2:1] {
     print do, end, for
 }
 
