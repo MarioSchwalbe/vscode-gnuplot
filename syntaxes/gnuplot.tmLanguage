@@ -976,13 +976,13 @@
 					<key>name</key>
 					<string>support.constant.gnuplot</string>
 					<key>match</key>
-					<string>\b(GPVAL_\w*|GPFUN_\w*|MOUSE_\w*)\b</string>
+					<string>\b(GPVAL_\w*|MOUSE_\w*)\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>support.variable.gnuplot</string>
 					<key>match</key>
-					<string>\b(ARG[0-9C]|FIT_\w*|STATS_\w*|pi|NaN)\b</string>
+					<string>\b(ARG[0-9C]|GPFUN_\w*|FIT_\w*|STATS_\w*|pi|NaN)\b</string>
 				</dict>
 			</array>
 		</dict>
@@ -1123,7 +1123,17 @@
 					<string>constant.numeric.float.gnuplot</string>
 					<key>match</key>
 					<string>(?x:
-						( ((\b[0-9]+)|)[.][0-9]+ )    # optional num and non-optional frac
+						( \b[0-9]+ )                  # non-optional number
+						( [Ee][+-]?[0-9]+ )           # non-optional exponent
+					)\b</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.float.gnuplot</string>
+					<key>match</key>
+					<string>(?x:
+						( ((\b[0-9]+)|(?<!\d)) )      # number or not a digit
+						( [.][0-9]+ )                 # non-optional fractional
 						( [Ee][+-]?[0-9]+ )?          # optional exponent
 					)\b</string>
 				</dict>
@@ -1170,7 +1180,7 @@
 			<key>name</key>
 			<string>constant.language.column.gnuplot</string>
 			<key>match</key>
-			<string>[$](0|(?!0)[0-9]+)\b</string>
+			<string>([$][0-9]+)\b</string>
 		</dict>
 
 		<!-- SingleQuotedStringLiteral -->
