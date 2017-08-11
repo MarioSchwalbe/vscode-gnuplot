@@ -6,7 +6,7 @@ Extension to provide (basic) GnuPlot language support for VS Code.
 
 Supports:
 
-+ Syntax highlighting: Works mostly (see [Known Issues](#Known Issues)).
++ Syntax highlighting: Works mostly (see [Known Issues](#known-issues)).
 + Problem matcher for build tasks.
 + Snippets
 
