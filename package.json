@@ -4,6 +4,7 @@
 	"description":  "GnuPlot language support for VS Code",
 	"version":      "0.1.0",
 	"publisher":    "MarioSchwalbe",
+	"icon":         "Logo.png",
 	"license":      "GPLv3",
 	"categories":   [ "Languages", "Snippets" ],
 	"homepage":     "https://github.com/MarioSchwalbe/vscode-gnuplot",
