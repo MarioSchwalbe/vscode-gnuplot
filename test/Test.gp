@@ -222,7 +222,8 @@ do for [do=strlen('abc') : end=sum [j=1:4] j : for=(2 > 1)?2:1] {
 #
 # show, set & unset commands
 #
-show angles
+show linetype 1
+show functions
 set title 'Some Title'
 set style data histogram
 set linetype 1 linecolor rgb '#a50f15'
