@@ -10,3 +10,4 @@ def MyFunc(x, y):
 
 res = MyFunc('a', 'b')
 print len(res)
+

@@ -1,22 +1,22 @@
 {
 	"comments": {
-		// symbol used for single line comment. Remove this entry if your language does not support line comments
+		// symbol used for single line comment
 		"lineComment": "#"
 	},
 	// symbols used as brackets (auto-indentation)
 	"brackets": [
-		["{", "}"],
-		["[", "]"],
-		["(", ")"]
+		["{", "}"]
+		// ["[", "]"],
+		// ["(", ")"]
 	],
 	// symbols that are auto closed when typing
 	"autoClosingPairs": [
 		["{", "}"],
 		["[", "]"],
 		["(", ")"],
-		{ "open": "'",  "close": "'",  "notIn": ["string"] },
-		{ "open": "`",  "close": "`",  "notIn": ["string"] },
-		{ "open": "\"", "close": "\"", "notIn": ["string"] }
+		{ "open": "'",  "close": "'",  "notIn": ["string", "comment"] },
+		{ "open": "`",  "close": "`",  "notIn": ["string", "comment"] },
+		{ "open": "\"", "close": "\"", "notIn": ["string", "comment"] }
 	],
 	// symbols that that can be used to surround a selection
 	"surroundingPairs": [

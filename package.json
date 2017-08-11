@@ -4,34 +4,66 @@
 	"description":  "GnuPlot language support for VS Code",
 	"version":      "0.1.0",
 	"publisher":    "MarioSchwalbe",
-	"icon":         "logo.svg",
-	"engines": {
-		"vscode":   "^1.0.0"
-	},
+	"license":      "GPLv3",
 	"categories":   [ "Languages", "Snippets" ],
+	"homepage":     "https://github.com/MarioSchwalbe/vscode-gnuplot",
+	"bugs": {
+		"url":      "https://github.com/MarioSchwalbe/vscode-gnuplot/issues"
+	},
+	"repository": {
+		"url":      "https://github.com/MarioSchwalbe/vscode-gnuplot.git",
+		"type":     "git"
+	},
+
 	"contributes": {
 		"languages": [
 			{
-				"id":            "gnuplot",
-				"aliases":       [ "GnuPlot", "Gnuplot", "gnuplot" ],
-				"extensions":    [ ".gp", ".gnu", ".plt", ".plot", ".gnuplot" ],
-				"firstLine":     "^#!/.*\\bgnuplot\\b",
-				"configuration": "./language-configuration.json"
+				"id":               "gnuplot",
+				"aliases":          [ "GnuPlot", "Gnuplot", "gnuplot" ],
+				"extensions":       [ ".gp", ".gnu", ".plt", ".plot", ".gnuplot" ],
+				"firstLine":        "^#!/.*\\bgnuplot\\b",
+				"configuration":    "./language-configuration.json"
 			}
 		],
+		"configuration": {
+			"title":                "GnuPlot Configuration",
+			"properties": {
+				"gnuplot.gnuplotPath": {
+					"type":         "string",
+					"default":      "gnuplot",
+					"description":  "Path to GnuPlot, you can use a custom version of GnuPlot by modifying this setting to include the full path."
+				}
+			}
+		},
 		"grammars": [
 			{
-				"language":      "gnuplot",
-				"scopeName":     "source.gnuplot",
-				"path":          "./syntaxes/gnuplot.tmLanguage"
+				"language":         "gnuplot",
+				"scopeName":        "source.gnuplot",
+				"path":             "./syntaxes/gnuplot.tmLanguage"
 			}
 		],
 		"snippets": [
 			{
-				"language":      "gnuplot",
-				"path":          "./snippets/snippets.json"
+				"language":         "gnuplot",
+				"path":             "./snippets/snippets.json"
+			}
+		],
+		"problemMatchers": [
+			{
+				"name":             "gnuplot",
+				"owner":            "gnuplot",
+				"fileLocation":     [ "relative", "${workspaceRoot}" ],
+				"pattern": {
+					"regexp":       "^\"(.*)\",\\s+line\\s+(\\d+):\\s*(.*)$",
+					"file":         1,
+					"line":         2,
+					"message":      3
+				}
 			}
 		]
+	},
+	"engines": {
+		"vscode": "^1.15.0"
 	}
 }
 
