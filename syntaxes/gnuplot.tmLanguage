@@ -199,10 +199,6 @@
 					-->
 					<key>name</key>
 					<string>entity.name.function.gnuplot</string>
-					<key>patterns</key>
-					<array>
-						<dict><key>include</key><string>#BuiltinFunctions</string></dict>
-					</array>
 				</dict>
 				<key>2</key>
 				<dict>
@@ -992,6 +988,16 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- Well actually not built-on anymore. -->
+				<dict>
+					<key>name</key>
+					<string>invalid.deprecated.function.gnuplot</string>
+					<key>match</key>
+					<string>\b(?x:
+						defined
+					)(?=\s*\()</string>
+				</dict>
+				<!-- Now the real built-ins. -->
 				<dict>
 					<key>name</key>
 					<string>support.function.math.gnuplot</string>
