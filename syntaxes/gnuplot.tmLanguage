@@ -263,11 +263,27 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- Deprecated commands -->
+				<dict>
+					<key>name</key>
+					<string>invalid.deprecated.command.gnuplot</string>
+
+					<key>begin</key>
+					<string>\b(?x:
+						update
+					)\b</string>
+
+					<key>end</key>
+					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+				</dict>
+
 				<!-- Simple commands without arguments -->
 				<dict>
 					<key>begin</key>
 					<string>\b(?x:
+						break        |
 						clear        |
+						continue     |
 						pwd          |
 						refresh      |
 						replot       |
@@ -311,6 +327,7 @@
 						stats        |
 						system       |
 						test         |
+						toggle       |
 						update
 					)\b</string>
 					<key>beginCaptures</key>
@@ -534,7 +551,7 @@
 						cntr(label|param)   |
 						color(box|sequence)?|
 						contour             |
-						dashtype            |
+						(dash|line)type     |
 						datafile            |
 						decimalsign         |
 						dgrid3d             |
@@ -548,7 +565,6 @@
 						history             |
 						key                 |
 						label               |
-						linetype            |
 						link                |
 						loadpath            |
 						locale              |
@@ -562,6 +578,7 @@
 						mono(chrome)?       |
 						mouse               |
 						multiplot           |
+						nonlinear           |
 						object              |
 						offsets             |
 						origin              |
@@ -586,16 +603,17 @@
 						timestamp           |
 						timefmt             |
 						title               |
+						theta               |
 						tmargin             |
 						view                |
 						xyplane             |
 						zero                |
-						(no)?(m)?(x|x2|y|y2|z|cb|r)tics  |
-						(x|x2|y|y2|z|cb)data             |
-						(x|x2|y|y2|z|cb)label            |
-						(x|x2|y|y2|z|cb)dtics            |
-						(x|x2|y|y2|z|cb)mtics            |
-						(x|x2|y|y2|z|cb|[rtuv])range     |
+						(no)?(m)?(x|x2|y|y2|z|cb|r|t)tics  |
+						(x|x2|y|y2|z|cb)data               |
+						(x|x2|y|y2|z|cb|r)label            |
+						(x|x2|y|y2|z|cb)dtics              |
+						(x|x2|y|y2|z|cb)mtics              |
+						(x|x2|y|y2|z|cb|[rtuv])range       |
 						(x|x2|y|y2|z)?zeroaxis
 					)\b</string>
 				</dict>
@@ -657,9 +675,13 @@
 # *************************************************************************************************
 -->
 
-		<!-- Expressions:
+		<!--
+			Expressions:
 				+ Includes assignments (via BuiltinOperators)
 				+ No for-iteration expressions (not permitted everywhere)
+			TODO:
+				+ Range expressions
+				+ Array subscript expressions
 		-->
 		<key>Expressions</key>
 		<dict>
