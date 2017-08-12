@@ -141,13 +141,14 @@
 					<string>entity.name.variable.gnuplot</string>
 					<key>patterns</key>
 					<array>
-						<!-- Note: GPFUN_* can be assigned. -->
+						<!-- Note: Only illegal here. GPFUN_* can be assigned. -->
 						<dict>
 							<key>name</key>
 							<string>invalid.illegal.variable.gnuplot</string>
 							<key>match</key>
 							<string>\b(GPVAL_\w*|MOUSE_\w*)\b</string>
 						</dict>
+						<dict><key>include</key><string>#BuiltinVariables</string></dict>
 					</array>
 				</dict>
 				<key>2</key>
@@ -198,6 +199,10 @@
 					-->
 					<key>name</key>
 					<string>entity.name.function.gnuplot</string>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#BuiltinFunctions</string></dict>
+					</array>
 				</dict>
 				<key>2</key>
 				<dict>
@@ -458,6 +463,7 @@
 					<array>
 						<dict><key>include</key><string>#PlotModifiers</string></dict>
 						<dict><key>include</key><string>#ForIterationExpr</string></dict>
+						<dict><key>include</key><string>#ColumnIndexLiteral</string></dict>
 						<dict><key>include</key><string>#Expressions</string></dict>
 					</array>
 				</dict>
@@ -499,6 +505,20 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>name</key>
+					<string>invalid.deprecated.options.gnuplot</string>
+					<key>match</key>
+					<string>\G\s*\b(?x:
+						clabel              |
+						data                |
+						function            |
+						historysize         |
+						ticslevel           |
+						ticscale            |
+						(style\s+increment\s+\w+)
+					)\b</string>
+				</dict>
 				<dict>
 					<key>name</key>
 					<string>support.class.options.gnuplot</string>
@@ -579,17 +599,6 @@
 						(x|x2|y|y2|z)?zeroaxis
 					)\b</string>
 				</dict>
-				<dict>
-					<key>name</key>
-					<string>invalid.deprecated.options.gnuplot</string>
-					<key>match</key>
-					<string>\G\s*\b(?x:
-						clabel              |
-						historysize         |
-						ticslevel           |
-						ticscale
-					)\b</string>
-				</dict>
 			</array>
 		</dict>
 
@@ -614,6 +623,12 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>name</key>
+					<string>invalid.deprecated.plot.gnuplot</string>
+					<key>match</key>
+					<string>\b(thru)\b</string>
+				</dict>
 				<dict>
 					<!-- One letter abbreviation would also match common iterator vars. -->
 					<key>name</key>
@@ -920,6 +935,21 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- Well actually not built-on anymore. -->
+				<dict>
+					<key>name</key>
+					<string>invalid.deprecated.variable.gnuplot</string>
+					<key>match</key>
+					<string>\b(?x:
+						FIT_LIMIT           |
+						FIT_MAXITER         |
+						FIT_START_LAMBDA    |
+						FIT_LAMBDA_FACTOR   |
+						FIT_SKIP            |
+						FIT_INDEX
+					)\b</string>
+				</dict>
+				<!-- Now the real built-ins. -->
 				<dict>
 					<key>name</key>
 					<string>support.constant.gnuplot</string>
@@ -1054,7 +1084,7 @@
 			<key>patterns</key>
 			<array>
 				<dict><key>include</key><string>#NumberLiterals</string></dict>
-				<dict><key>include</key><string>#ColumnIndexLiteral</string></dict>
+				<dict><key>include</key><string>#DeprecatedArgsLiteral</string></dict>
 				<dict><key>include</key><string>#SingleQuotedStringLiteral</string></dict>
 				<dict><key>include</key><string>#DoubleQuotedStringLiteral</string></dict>
 				<dict><key>include</key><string>#InterpolatedStringLiteral</string></dict>
@@ -1131,6 +1161,15 @@
 			<string>([$][0-9]+)\b</string>
 		</dict>
 
+		<!-- DeprecatedArgsLiteral -->
+		<key>DeprecatedArgsLiteral</key>
+		<dict>
+			<key>name</key>
+			<string>invalid.deprecated.scriptargs.gnuplot</string>
+			<key>match</key>
+			<string>([$]([0-9]|#))</string>
+		</dict>
+
 		<!-- SingleQuotedStringLiteral -->
 		<key>SingleQuotedStringLiteral</key>
 		<dict>
@@ -1203,6 +1242,7 @@
 			<array>
 				<dict><key>include</key><string>#EscapedChar</string></dict>
 				<dict><key>include</key><string>#RGBColorSpec</string></dict>
+				<dict><key>include</key><string>#DeprecatedArgsLiteral</string></dict>
 				<dict><key>include</key><string>#InterpolatedStringLiteral</string></dict>
 			</array>
 		</dict>
