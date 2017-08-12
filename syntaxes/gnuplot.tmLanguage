@@ -258,13 +258,35 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- Simple commands with no arguments -->
+				<dict>
+					<key>begin</key>
+					<string>\b(?x:
+						clear        |
+						pwd          |
+						refresh      |
+						replot       |
+						reread
+					)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>0</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(;|#|$))</string>
+				</dict>
+
 				<!-- Simple commands -->
 				<dict>
 					<key>begin</key>
 					<string>\b(?x:
 						cd           |
 						call         |
-						clear        |
 						eval         |
 						exit         |
 						fit          |
@@ -275,12 +297,8 @@
 						pause        |
 						print        |
 						printerr     |
-						pwd          |
 						quit         |
 						raise        |
-						refresh      |
-						replot       |
-						reread       |
 						reset        |
 						save         |
 						shell        |
@@ -565,7 +583,7 @@
 					<key>name</key>
 					<string>invalid.deprecated.options.gnuplot</string>
 					<key>match</key>
-					<string>\b(?x:
+					<string>\G\s*\b(?x:
 						clabel              |
 						historysize         |
 						ticslevel           |
@@ -578,7 +596,6 @@
 		<!-- ExtraShowOptions -->
 		<key>ExtraShowOptions</key>
 		<dict>
-			<!-- same as: SetUnsetOptions -->
 			<key>name</key>
 			<string>support.class.options.gnuplot</string>
 			<key>match</key>
@@ -603,8 +620,8 @@
 					<string>storage.type.plot.gnuplot</string>
 					<key>match</key>
 					<string>\b(?x:
-						every               |
 						in(dex)?            |
+						every               |
 						us(ing)?            |
 						wi(th)?             |
 						via
@@ -648,11 +665,11 @@
 			<!-- for [ i in 'A B CD' ] -->
 			<key>begin</key>
 			<string>\b(?x:
-				(for)\s*                    # 1: for
+				(for)\s*                    # 1: for keyword
 				(\[)\s*                     # 2: opening bracket
-				(?:
+				(?:                         #    optionally
 					([A-Za-z_]\w*)\s+       # 3: var name
-					(in)\b                  # 4: assignment
+					(in)\b                  # 4: in keyword
 				)?
 			)</string>
 			<key>beginCaptures</key>
@@ -976,7 +993,7 @@
 				</dict>
 				<dict>
 					<key>name</key>
-					<string>support.function.strings.gnuplot</string>
+					<string>support.function.string.gnuplot</string>
 					<key>match</key>
 					<string>\b(?x:
 						gprintf        |
@@ -1049,7 +1066,7 @@
 					<string>(?x:
 						( \b[0-9]+ )                  # non-optional number
 						( [Ee][+-]?[0-9]+ )           # non-optional exponent
-					)\b</string>
+					)(cm|in)?\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -1059,37 +1076,37 @@
 						( ((\b[0-9]+)|(?&lt;!\d)) )   # number or not a digit
 						( [.][0-9]+ )                 # non-optional fractional
 						( [Ee][+-]?[0-9]+ )?          # optional exponent
-					)\b</string>
+					)(cm|in)?\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>constant.numeric.hex.gnuplot</string>
 					<key>match</key>
-					<string>\b(0[Xx][0-9a-fA-F]+)\b</string>
+					<string>\b(0[Xx][0-9a-fA-F]+)(cm|in)?\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>constant.numeric.dec.gnuplot</string>
 					<key>match</key>
-					<string>\b(0+)\b</string>
+					<string>\b(0+)(cm|in)?\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>constant.numeric.oct.gnuplot</string>
 					<key>match</key>
-					<string>\b(0[0-7]+)\b</string>
+					<string>\b(0[0-7]+)(cm|in)?\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>invalid.illegal.dec.gnuplot</string>
 					<key>match</key>
-					<string>\b(0[0-9]+)\b</string>
+					<string>\b(0[0-9]+)(cm|in)?\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
 					<string>constant.numeric.dec.gnuplot</string>
 					<key>match</key>
-					<string>\b([0-9]+)\b</string>
+					<string>\b([0-9]+)(cm|in)?\b</string>
 				</dict>
 			</array>
 		</dict>
