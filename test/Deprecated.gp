@@ -37,7 +37,7 @@ set ticscale
 # now: set linetype
 set style increment user
 
-# FIXME: Flag as deprecated
+# FIXME: Flag pm3d options as deprecated
 set pm3d hidden3d 1
 set pm3d map
 

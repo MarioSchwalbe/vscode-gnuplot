@@ -103,23 +103,36 @@ R = A ne B
 # ******************************************* Built-ins *******************************************
 # *************************************************************************************************
 
-# Constants/Variables
+# Constants/Variables:
 print 'GPVAL_TERM: ', GPVAL_TERM
 print 'NaN: ', NaN
 print 'pi: ', pi
 
-# # Flagged as invalid
+# # Arrays:
+# array A[6]
+# A[1] = 1
+# A[2] = { 2.0, 2.0 }
+# A[3] = strlen("four")
+# array B[6] = [ "one", 2.0, A[3] ]
+
+# print 'Sizes: ', |A|, |B|
+# do for [i=1:3] {
+#     print A[i], B[i]
+# }
+
+# # Flagged as invalid:
 # GPVAL_XX = 0
 # MOUSE_XX = 0
+# array GPVAL_XX[3]
 
-# Functions
+# Functions:
 strlen = strlen('Hello World')
 print strlen
 print strlen('Hello World')
 
-# FIXME: Flag functions as invalid
-strlen(x) = x
-print strlen('Called user-defined function')
+# # FIXME: Flag functions as invalid:
+# strlen(x) = x
+# print strlen('Called user-defined function')
 
 # *************************************************************************************************
 # ************************************* Expressions/Toplevels *************************************

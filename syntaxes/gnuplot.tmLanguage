@@ -39,6 +39,7 @@
 		<dict><key>include</key><string>#DataBlock</string></dict>
 		<dict><key>include</key><string>#MacroExpansion</string></dict>
 		<dict><key>include</key><string>#VariableDecl</string></dict>
+		<dict><key>include</key><string>#ArrayDecl</string></dict>
 		<dict><key>include</key><string>#FunctionDecl</string></dict>
 		<dict><key>include</key><string>#Commands</string></dict>
 	</array>
@@ -131,7 +132,8 @@
 			<key>begin</key>
 			<string>\b(?x:
 				([A-Za-z_]\w*)\s*                # 1: var name
-				(=)(?!\s*=)                      # 2: assignment
+				(?=(\[|=(?!\s*=)))               # 2: array opening bracket or assignment
+				# Note: treat index decl and init expression below
 			)</string>
 			<key>beginCaptures</key>
 			<dict>
@@ -141,21 +143,48 @@
 					<string>entity.name.variable.gnuplot</string>
 					<key>patterns</key>
 					<array>
-						<!-- Note: Only illegal here. GPFUN_* can be assigned. -->
-						<dict>
-							<key>name</key>
-							<string>invalid.illegal.variable.gnuplot</string>
-							<key>match</key>
-							<string>\b(GPVAL_\w*|MOUSE_\w*)\b</string>
-						</dict>
+						<dict><key>include</key><string>#InvalidVariableDecl</string></dict>
 						<dict><key>include</key><string>#BuiltinVariables</string></dict>
 					</array>
 				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Expressions</string></dict>
+			</array>
+		</dict>
+
+		<!-- ArrayDecl -->
+		<key>ArrayDecl</key>
+		<dict>
+			<key>name</key>
+			<string>meta.variable.gnuplot</string>
+
+			<key>begin</key>
+			<string>\b(?x:
+				(array)\s+                       # 1: array keyword
+				([A-Za-z_]\w*)?                  # 2: var name
+				# Note: treat size decl and init expression below
+			)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>support.type.array.gnuplot</string>
+				</dict>
 				<key>2</key>
 				<dict>
+					<key>name</key>
+					<string>entity.name.variable.gnuplot</string>
 					<key>patterns</key>
 					<array>
-						<dict><key>include</key><string>#BuiltinOperators</string></dict>
+						<dict><key>include</key><string>#InvalidVariableDecl</string></dict>
+						<dict><key>include</key><string>#BuiltinVariables</string></dict>
 					</array>
 				</dict>
 			</dict>
@@ -246,6 +275,15 @@
 			<array>
 				<dict><key>include</key><string>#Expressions</string></dict>
 			</array>
+		</dict>
+
+		<!-- InvalidVariableDecl -->
+		<key>InvalidVariableDecl</key>
+		<dict>
+			<key>name</key>
+			<string>invalid.illegal.variable.gnuplot</string>
+			<key>match</key>
+			<string>\b(GPVAL_\w*|MOUSE_\w*)\b</string>
 		</dict>
 
 <!--
