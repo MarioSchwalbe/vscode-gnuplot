@@ -22,13 +22,13 @@ set palette defined (   \
     100  "yellow"       \
 )
 
-BGC = hsv2rgb(0.55, 1, 0.35)
-BGF = hsv2rgb(0.55, 1, 0.50)
+BGC = hsv2rgb(0.55, 1, 0.8)
+BGF = hsv2rgb(0.55, 1, 0.7)
 
 # Draw background circles:
 set style fill solid
 set object circle center screen 0.5,0.5 size screen 0.50 behind fillcolor rgb BGC
-set object circle center screen 0.5,0.5 size screen 0.47 behind fillcolor rgb BGF
+set object circle center screen 0.5,0.5 size screen 0.46 behind fillcolor rgb BGF
 
 # Setup splot:
 S = 16

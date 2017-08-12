@@ -14,14 +14,14 @@ unset key
 
 # Setup colors:
 AC  = '#f7f7f7'
-FG  = hsv2rgb(0.11, 1, 1.0)
-BGC = hsv2rgb(0.55, 1, 0.5)
-BGF = hsv2rgb(0.55, 1, 0.6)
+FG  = hsv2rgb(0.10, 1, 1.0)
+BGC = hsv2rgb(0.55, 1, 0.6)
+BGF = hsv2rgb(0.55, 1, 0.7)
 
 # Draw background circles:
 set style fill solid
 set object circle center screen 0.5,0.5 size screen 0.50 behind fillcolor rgb BGC
-set object circle center screen 0.5,0.5 size screen 0.47 behind fillcolor rgb BGF
+set object circle center screen 0.5,0.5 size screen 0.46 behind fillcolor rgb BGF
 
 # Setup tic marks:
 set border linecolor rgb AC linewidth 20
