@@ -258,7 +258,7 @@
 		<dict>
 			<key>patterns</key>
 			<array>
-				<!-- Simple commands with no arguments -->
+				<!-- Simple commands without arguments -->
 				<dict>
 					<key>begin</key>
 					<string>\b(?x:
@@ -281,7 +281,7 @@
 					<string>(?=(;|#|$))</string>
 				</dict>
 
-				<!-- Simple commands -->
+				<!-- Simple commands with arguments -->
 				<dict>
 					<key>begin</key>
 					<string>\b(?x:
