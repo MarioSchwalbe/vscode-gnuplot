@@ -4,7 +4,7 @@
 # ******************************************* Comments ********************************************
 # *************************************************************************************************
 
-# FIXME: Incorrect 2nd line highlight (comments) \
+# Note: Next line must be a comment \
 print "Still a comment"
 
 # Comment before statement
@@ -47,7 +47,7 @@ print "Hallo Welt\''\"_\a\b\c_\n2nd line"
 print 'Unterminated string literal
 print "Unterminated string literal
 
-# FIXME: Incorrect 2nd line highlight (strings)
+# Continued string literals
 print 'Quoted newline string literal \
     2nd line'
 print "Quoted newline string literal \
@@ -136,8 +136,8 @@ END
 print $DATA
 
 # Macros
-PRINT = 'print "I''m a macro!"'
-@PRINT, " ... and some other text!"
+PRINT = 'print "I''m a macro!", '
+@PRINT " ... and some other text!"
 
 # Function decls
 MyLen(x) = strlen(x)

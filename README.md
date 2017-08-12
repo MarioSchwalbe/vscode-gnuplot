@@ -6,8 +6,8 @@ Extension to provide (basic) Gnuplot language support for VS Code.
 
 Supports:
 
-+ Syntax highlighting: Works mostly (see [Known Issues](#known-issues)).
-+ Problem matcher for build tasks.
++ Syntax highlighting
++ Problem matcher for build tasks
 + Snippets
 
 To make use of the problem matcher, the task should pass the relative file path to Gnuplot.
@@ -40,10 +40,6 @@ This extension contributes the following settings:
 + `gnuplot.gnuplotPath`: Path to the Gnuplot executable. Not used by this extension, but useful in
   `tasks.json` if it's checked into repositories. Use a command such as
   `${config:gnuplot.gnuplotPath}`.
-
-## Known Issues ##
-
-Currently escaped newlines (Gnuplot line continuation) are not supported and will look ugly.
 
 ## Source ##
 

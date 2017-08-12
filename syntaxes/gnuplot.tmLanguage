@@ -114,7 +114,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>(?=(;|#|$))</string>
+			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 			<key>patterns</key>
 			<array>
@@ -160,7 +160,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>(?=(;|#|$))</string>
+			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 			<key>patterns</key>
 			<array>
@@ -239,7 +239,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>(?=(;|#|$))</string>
+			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 			<key>patterns</key>
 			<array>
@@ -266,6 +266,7 @@
 						pwd          |
 						refresh      |
 						replot       |
+						undefine     | # has args but nothing to highlight
 						reread
 					)\b</string>
 					<key>beginCaptures</key>
@@ -278,7 +279,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|$))</string>
+					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 				</dict>
 
 				<!-- Simple commands with arguments -->
@@ -305,7 +306,6 @@
 						stats        |
 						system       |
 						test         |
-						undefine     |
 						update
 					)\b</string>
 					<key>beginCaptures</key>
@@ -318,7 +318,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|$))</string>
+					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -341,7 +341,7 @@
 
 					<!-- Note: Include newline for old-style syntax. -->
 					<key>end</key>
-					<string>(?=(\{|#|$))</string>
+					<string>(?=(\{|#|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -364,7 +364,7 @@
 
 					<!-- Note: Include newline for old-style syntax. -->
 					<key>end</key>
-					<string>(?=(\{|#|$))</string>
+					<string>(?=(\{|#|(?&lt;!\\)\n$))</string>
 				</dict>
 
 				<!-- Command: Do -->
@@ -382,7 +382,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(\{|#|$))</string>
+					<string>(?=(\{|#|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -404,7 +404,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|$))</string>
+					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -428,7 +428,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|$))</string>
+					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -452,7 +452,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|$))</string>
+					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -482,7 +482,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|$))</string>
+					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -650,6 +650,13 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<!-- Note: Also handle invalid line continuations here. -->
+				<dict>
+					<key>name</key>
+					<string>invalid.illegal.backslash.gnuplot</string>
+					<key>match</key>
+					<string>(\\(?!\n).*)</string>
+				</dict>
 				<dict><key>include</key><string>#Literals</string></dict>
 				<dict><key>include</key><string>#Builtins</string></dict>
 				<dict><key>include</key><string>#SpecialVariables</string></dict>
@@ -699,7 +706,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>((\])|(?=(#|$)))</string>
+			<string>((\])|(?=(#|(?&lt;!\\)\n$)))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>2</key>
@@ -740,7 +747,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>((\])|(?=(#|$)))</string>
+			<string>((\])|(?=(#|(?&lt;!\\)\n$)))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>2</key>
@@ -774,7 +781,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>((?&lt;!:)(:)(?!:)|(?=(#|$)))</string>
+			<string>((?&lt;!:)(:)(?!:)|(?=(#|(?&lt;!\\)\n$)))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>2</key>
@@ -1142,10 +1149,10 @@
 			</dict>
 
 			<key>end</key>
-			<string>('(?!')|$)</string>
+			<string>((')(?!')|(?=(?&lt;!\\)\n$))</string>
 			<key>endCaptures</key>
 			<dict>
-				<key>1</key>
+				<key>0</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.string.end.gnuplot</string>
@@ -1182,10 +1189,10 @@
 			</dict>
 
 			<key>end</key>
-			<string>("|$)</string>
+			<string>((")|(?=(?&lt;!\\)\n$))</string>
 			<key>endCaptures</key>
 			<dict>
-				<key>1</key>
+				<key>0</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.string.end.gnuplot</string>
@@ -1218,10 +1225,10 @@
 			</dict>
 
 			<key>end</key>
-			<string>(`|$)</string>
+			<string>((`)|(?=(?&lt;!\\)\n$))</string>
 			<key>endCaptures</key>
 			<dict>
-				<key>1</key>
+				<key>0</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.string.end.gnuplot</string>
@@ -1276,10 +1283,10 @@
 			</dict>
 
 			<key>end</key>
-			<string>($)</string>
+			<string>(?=(?&lt;!\\)\n$)</string>
 			<key>endCaptures</key>
 			<dict>
-				<key>1</key>
+				<key>0</key>
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.comment.end.gnuplot</string>
