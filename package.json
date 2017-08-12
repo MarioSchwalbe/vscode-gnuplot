@@ -1,9 +1,9 @@
 {
 	"name":         "gnuplot",
-	"displayName":  "GnuPlot",
-	"description":  "GnuPlot language support for VS Code",
+	"displayName":  "Gnuplot",
+	"description":  "Gnuplot language support for VS Code",
 	"version":      "0.1.0",
-	"publisher":    "MarioSchwalbe",
+	"publisher":    "Mario Schwalbe",
 	"icon":         "images/Logo2.png",
 	"license":      "GPLv3",
 	"categories":   [ "Languages", "Snippets" ],
@@ -22,19 +22,19 @@
 		"languages": [
 			{
 				"id":               "gnuplot",
-				"aliases":          [ "GnuPlot", "Gnuplot", "gnuplot" ],
+				"aliases":          [ "Gnuplot", "gnuplot" ],
 				"extensions":       [ ".gp", ".gnu", ".plt", ".plot", ".gnuplot" ],
 				"firstLine":        "^#!/.*\\bgnuplot\\b",
 				"configuration":    "language-configuration.json"
 			}
 		],
 		"configuration": {
-			"title":                "GnuPlot Configuration",
+			"title":                "Gnuplot Configuration",
 			"properties": {
 				"gnuplot.gnuplotPath": {
 					"type":         "string",
 					"default":      "gnuplot",
-					"description":  "Path to GnuPlot, you can use a custom version of GnuPlot by modifying this setting to include the full path."
+					"description":  "Path to Gnuplot, you can use a custom version of Gnuplot by modifying this setting to include the full path."
 				}
 			}
 		},
