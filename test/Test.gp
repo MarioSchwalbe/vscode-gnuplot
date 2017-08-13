@@ -130,9 +130,9 @@ strlen = strlen('Hello World')
 print strlen
 print strlen('Hello World')
 
-# # FIXME: Flag functions as invalid:
-# strlen(x) = x
-# print strlen('Called user-defined function')
+# FIXME: Flag functions as invalid:
+strlen(x) = x
+print strlen('Called user-defined function')
 
 # *************************************************************************************************
 # ************************************* Expressions/Toplevels *************************************

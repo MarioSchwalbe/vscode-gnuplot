@@ -3,7 +3,6 @@
 <plist version="1.0">
 <dict>
 	<!--
-		DOC: https://code.visualstudio.com/docs/extensions/themes-snippets-colorizers
 		DOC: https://www.sublimetext.com/docs/3/scope_naming.html
 		DOC: https://manual.macromates.com/en/language_grammars
 	-->
@@ -26,7 +25,8 @@
 
 	<key>patterns</key>
 	<array>
-		<!-- Simplifies other rules a bit. -->
+		<!-- Simplifies other rules: -->
+		<dict><key>include</key><string>#InvalidLineContinuation</string></dict>
 		<dict>
 			<key>name</key>
 			<string>punctuation.separator.statement.gnuplot</string>
@@ -222,12 +222,13 @@
 			<dict>
 				<key>1</key>
 				<dict>
-					<!--
-						FIXME: Highlight invalid function names.
-						How to get built-in function list in here?
-					-->
+					<!-- FIXME: Highlight invalid function names. -->
 					<key>name</key>
 					<string>entity.name.function.gnuplot</string>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#BuiltinFunctions</string></dict>
+					</array>
 				</dict>
 				<key>2</key>
 				<dict>
@@ -709,6 +710,15 @@
 # *************************************************************************************************
 -->
 
+		<!-- InvalidLineContinuation -->
+		<key>InvalidLineContinuation</key>
+		<dict>
+			<key>name</key>
+			<string>invalid.illegal.backslash.gnuplot</string>
+			<key>match</key>
+			<string>(\\(?!\n).*)</string>
+		</dict>
+
 		<!--
 			Expressions:
 				+ Includes assignments (via BuiltinOperators)
@@ -721,17 +731,13 @@
 		<dict>
 			<key>patterns</key>
 			<array>
-				<!-- Note: Also handle invalid line continuations here. -->
-				<dict>
-					<key>name</key>
-					<string>invalid.illegal.backslash.gnuplot</string>
-					<key>match</key>
-					<string>(\\(?!\n).*)</string>
-				</dict>
+				<dict><key>include</key><string>#InvalidLineContinuation</string></dict>
 				<dict><key>include</key><string>#Literals</string></dict>
-				<dict><key>include</key><string>#Builtins</string></dict>
+				<dict><key>include</key><string>#BuiltinOperators</string></dict>
+				<dict><key>include</key><string>#BuiltinVariables</string></dict>
 				<dict><key>include</key><string>#SpecialVariables</string></dict>
 				<dict><key>include</key><string>#TernaryExpression</string></dict>
+				<dict><key>include</key><string>#CallExpression</string></dict>
 				<dict><key>include</key><string>#SummationExpr</string></dict>
 			</array>
 		</dict>
@@ -837,6 +843,47 @@
 			</array>
 		</dict>
 
+		<!-- CallExpression: fn(...) -->
+		<key>CallExpression</key>
+		<dict>
+			<key>name</key>
+			<string>meta.function-call.gnuplot</string>
+
+			<key>begin</key>
+			<string>\b(?:([A-Za-z_]\w*)\s*(\())</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#BuiltinFunctions</string></dict>
+					</array>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.begin.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>((\))|(?=(#|(?&lt;!\\)\n$)))</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.arguments.end.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>patterns</key>
+			<array>
+				<dict><key>include</key><string>#Expressions</string></dict>
+			</array>
+		</dict>
+
 		<!-- TernaryExpression (Is actually an operator, but references others). -->
 		<key>TernaryExpression</key>
 		<dict>
@@ -866,23 +913,6 @@
 			<array>
 				<dict><key>include</key><string>#Expressions</string></dict>
 			</array>
-		</dict>
-
-		<!-- SpecialVariables -->
-		<key>SpecialVariables</key>
-		<dict>
-			<key>name</key>
-			<string>constant.language.special.gnuplot</string>
-			<key>match</key>
-			<string>(([@$])[A-Za-z_]\w*)\b</string>
-			<key>captures</key>
-			<dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.variable.gnuplot</string>
-				</dict>
-			</dict>
 		</dict>
 
 		<!-- RangeSeparators -->
@@ -916,17 +946,6 @@
 # ******************************************* Built-ins *******************************************
 # *************************************************************************************************
 -->
-
-		<!-- Builtins -->
-		<key>Builtins</key>
-		<dict>
-			<key>patterns</key>
-			<array>
-				<dict><key>include</key><string>#BuiltinOperators</string></dict>
-				<dict><key>include</key><string>#BuiltinVariables</string></dict>
-				<dict><key>include</key><string>#BuiltinFunctions</string></dict>
-			</array>
-		</dict>
 
 		<!-- BuiltinOperators -->
 		<key>BuiltinOperators</key>
@@ -1021,6 +1040,23 @@
 			</array>
 		</dict>
 
+		<!-- SpecialVariables -->
+		<key>SpecialVariables</key>
+		<dict>
+			<key>name</key>
+			<string>constant.language.special.gnuplot</string>
+			<key>match</key>
+			<string>(([@$])[A-Za-z_]\w*)\b</string>
+			<key>captures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.variable.gnuplot</string>
+				</dict>
+			</dict>
+		</dict>
+
 		<!-- BuiltinFunctions -->
 		<key>BuiltinFunctions</key>
 		<dict>
@@ -1033,7 +1069,7 @@
 					<key>match</key>
 					<string>\b(?x:
 						defined
-					)(?=\s*\()</string>
+					)\b</string>
 				</dict>
 				<!-- Now the real built-ins. -->
 				<dict>
@@ -1092,7 +1128,7 @@
 						faddeeva       |
 						erfi           |
 						VP
-					)(?=\s*\()</string>
+					)\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -1109,7 +1145,7 @@
 						system         |
 						word           |
 						words
-					)(?=\s*\()</string>
+					)\b</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -1133,7 +1169,7 @@
 						time           |
 						valid          |
 						value
-					)(?=\s*\()</string>
+					)\b</string>
 				</dict>
 			</array>
 		</dict>
