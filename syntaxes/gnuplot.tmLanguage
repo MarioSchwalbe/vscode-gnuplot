@@ -28,12 +28,17 @@
 		<!-- Simplifies other rules: -->
 		<dict>
 			<key>name</key>
+			<string>invalid.illegal.backslash.gnuplot</string>
+			<key>match</key>
+			<string>(\\(?!\n).*)</string>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>punctuation.separator.statement.gnuplot</string>
 			<key>match</key>
 			<string>(;)</string>
 		</dict>
 		<dict><key>include</key><string>#LineComment</string></dict>
-		<dict><key>include</key><string>#InvalidLineContinuation</string></dict>
 
 		<!-- Toplevel declarations: -->
 		<dict><key>include</key><string>#DataBlock</string></dict>
@@ -115,7 +120,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+			<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 			<key>patterns</key>
 			<array>
@@ -161,7 +166,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+			<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 			<key>patterns</key>
 			<array>
@@ -201,7 +206,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+			<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 			<key>patterns</key>
 			<array>
@@ -274,7 +279,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+			<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 			<key>patterns</key>
 			<array>
@@ -313,7 +318,7 @@
 					)\b</string>
 
 					<key>end</key>
-					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 				</dict>
 
 				<!-- Simple commands without arguments -->
@@ -339,7 +344,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 				</dict>
 
 				<!-- Simple commands with arguments -->
@@ -379,7 +384,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -402,7 +407,7 @@
 
 					<!-- Note: Include newline for old-style syntax. -->
 					<key>end</key>
-					<string>(?=(\{|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(\{|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -425,7 +430,7 @@
 
 					<!-- Note: Include newline for old-style syntax. -->
 					<key>end</key>
-					<string>(?=(\{|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(\{|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 				</dict>
 
 				<!-- Command: Do -->
@@ -443,7 +448,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(\{|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(\{|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -465,7 +470,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -489,7 +494,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -513,7 +518,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -544,7 +549,7 @@
 					</dict>
 
 					<key>end</key>
-					<string>(?=(;|#|(?&lt;!\\)\n$))</string>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
 					<key>patterns</key>
 					<array>
@@ -726,7 +731,6 @@
 		<dict>
 			<key>patterns</key>
 			<array>
-				<dict><key>include</key><string>#InvalidLineContinuation</string></dict>
 				<dict><key>include</key><string>#Literal</string></dict>
 				<dict><key>include</key><string>#BuiltinOperator</string></dict>
 				<dict><key>include</key><string>#BuiltinVariable</string></dict>
@@ -735,15 +739,6 @@
 				<dict><key>include</key><string>#CallExpression</string></dict>
 				<dict><key>include</key><string>#SummationExpr</string></dict>
 			</array>
-		</dict>
-
-		<!-- InvalidLineContinuation -->
-		<key>InvalidLineContinuation</key>
-		<dict>
-			<key>name</key>
-			<string>invalid.illegal.backslash.gnuplot</string>
-			<key>match</key>
-			<string>(\\(?!\n).*)</string>
 		</dict>
 
 		<!-- ForIterationExpr -->
@@ -787,7 +782,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>((\])|(?=(#|(?&lt;!\\)\n$)))</string>
+			<string>((\])|(?=(#|\\(?!\n)|(?&lt;!\\)\n$)))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>2</key>
@@ -828,7 +823,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>((\])|(?=(#|(?&lt;!\\)\n$)))</string>
+			<string>((\])|(?=(#|\\(?!\n)|(?&lt;!\\)\n$)))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>2</key>
@@ -872,7 +867,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>((\))|(?=(#|(?&lt;!\\)\n$)))</string>
+			<string>((\))|(?=(#|\\(?!\n)|(?&lt;!\\)\n$)))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>2</key>
@@ -903,7 +898,7 @@
 			</dict>
 
 			<key>end</key>
-			<string>((?&lt;!:)(:)(?!:)|(?=(#|(?&lt;!\\)\n$)))</string>
+			<string>((?&lt;!:)(:)(?!:)|(?=(#|\\(?!\n)|(?&lt;!\\)\n$)))</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>2</key>
