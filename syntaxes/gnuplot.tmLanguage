@@ -216,7 +216,7 @@
 					)*
 					(\))                         # 7: closing parens
 				)\s*
-				(=)(?!\s*=)                      # 8: assignment
+				(?=(=)(?!\s*=))                  # 8: assignment
 			)</string>
 			<key>beginCaptures</key>
 			<dict>
@@ -259,13 +259,6 @@
 				<dict>
 					<key>name</key>
 					<string>punctuation.definition.parameters.end.gnuplot</string>
-				</dict>
-				<key>8</key>
-				<dict>
-					<key>patterns</key>
-					<array>
-						<dict><key>include</key><string>#BuiltinOperator</string></dict>
-					</array>
 				</dict>
 			</dict>
 
@@ -710,15 +703,6 @@
 # *************************************************************************************************
 -->
 
-		<!-- InvalidLineContinuation -->
-		<key>InvalidLineContinuation</key>
-		<dict>
-			<key>name</key>
-			<string>invalid.illegal.backslash.gnuplot</string>
-			<key>match</key>
-			<string>(\\(?!\n).*)</string>
-		</dict>
-
 		<!--
 			Expressions:
 				+ Includes assignments (via BuiltinOperator)
@@ -740,6 +724,15 @@
 				<dict><key>include</key><string>#CallExpression</string></dict>
 				<dict><key>include</key><string>#SummationExpr</string></dict>
 			</array>
+		</dict>
+
+		<!-- InvalidLineContinuation -->
+		<key>InvalidLineContinuation</key>
+		<dict>
+			<key>name</key>
+			<string>invalid.illegal.backslash.gnuplot</string>
+			<key>match</key>
+			<string>(\\(?!\n).*)</string>
 		</dict>
 
 		<!-- ForIterationExpr -->
