@@ -745,8 +745,8 @@
 				<dict><key>include</key><string>#SpecialVariable</string></dict>
 				<dict><key>include</key><string>#BuiltinVariable</string></dict>
 				<dict><key>include</key><string>#BuiltinOperator</string></dict>
-				<dict><key>include</key><string>#TernaryExpression</string></dict>
-				<dict><key>include</key><string>#CallExpression</string></dict>
+				<dict><key>include</key><string>#TernaryExpr</string></dict>
+				<dict><key>include</key><string>#FunctionCallExpr</string></dict>
 				<dict><key>include</key><string>#SummationExpr</string></dict>
 			</array>
 		</dict>
@@ -815,15 +815,15 @@
 		<key>SummationExpr</key>
 		<dict>
 			<key>begin</key>
-			<string>\b((sum)\s*(\[))</string>
+			<string>\b(sum)\s*(\[)</string>
 			<key>beginCaptures</key>
 			<dict>
-				<key>2</key>
+				<key>1</key>
 				<dict>
 					<key>name</key>
 					<string>keyword.other.sum.gnuplot</string>
 				</dict>
-				<key>3</key>
+				<key>2</key>
 				<dict>
 					<key>patterns</key>
 					<array>
@@ -852,14 +852,14 @@
 			</array>
 		</dict>
 
-		<!-- CallExpression: fn(...) -->
-		<key>CallExpression</key>
+		<!-- FunctionCallExpr: fn(...) -->
+		<key>FunctionCallExpr</key>
 		<dict>
 			<key>name</key>
 			<string>meta.function-call.gnuplot</string>
 
 			<key>begin</key>
-			<string>\b(?:([A-Za-z_]\w*)\s*(\())</string>
+			<string>\b([A-Za-z_]\w*)\s*(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -895,8 +895,8 @@
 			</array>
 		</dict>
 
-		<!-- TernaryExpression (Is actually an operator, but references others). -->
-		<key>TernaryExpression</key>
+		<!-- TernaryExpr (Is actually an operator, but references others). -->
+		<key>TernaryExpr</key>
 		<dict>
 			<key>begin</key>
 			<string>(?&lt;!\?)(\?)(?!\?)</string>
@@ -1085,7 +1085,7 @@
 			</array>
 		</dict>
 
-		<!-- BuiltinFunction: Word list only. @see: CallExpression. -->
+		<!-- BuiltinFunction: Word list only. @see: FunctionCallExpr. -->
 		<key>BuiltinFunction</key>
 		<dict>
 			<key>patterns</key>
