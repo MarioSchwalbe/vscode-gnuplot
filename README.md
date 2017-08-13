@@ -7,7 +7,7 @@ Extension to provide (basic) Gnuplot language support for VS Code.
 Supports:
 
 + Syntax highlighting
-+ Problem matcher for build tasks
++ Problem matcher (and pattern) for build tasks
 + Snippets
 
 To make use of the problem matcher, the task should pass the relative file path to Gnuplot.

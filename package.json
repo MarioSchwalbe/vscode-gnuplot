@@ -19,15 +19,6 @@
 		"vscode":   "^1.15.0"
 	},
 	"contributes": {
-		"languages": [
-			{
-				"id":               "gnuplot",
-				"aliases":          [ "Gnuplot", "gnuplot" ],
-				"extensions":       [ ".gp", ".plt", ".plot", ".gnuplot" ],
-				"firstLine":        "^#!/.*\\bgnuplot\\b",
-				"configuration":    "language-configuration.json"
-			}
-		],
 		"configuration": {
 			"title":                "Gnuplot Configuration",
 			"properties": {
@@ -38,6 +29,15 @@
 				}
 			}
 		},
+		"languages": [
+			{
+				"id":               "gnuplot",
+				"aliases":          [ "Gnuplot", "gnuplot" ],
+				"extensions":       [ ".gp", ".plt", ".plot", ".gnuplot" ],
+				"firstLine":        "^#!/.*\\bgnuplot\\b",
+				"configuration":    "language-configuration.json"
+			}
+		],
 		"grammars": [
 			{
 				"language":         "gnuplot",
@@ -55,14 +55,18 @@
 			{
 				"name":             "gnuplot",
 				"owner":            "gnuplot",
-				"fileLocation":     [ "relative", "${workspaceRoot}" ],
-				"pattern": {
-					"regexp":       "^\"(.*)\",\\s*line\\s+(\\d+):(?:\\s*(warning):.*?:)?\\s*(.*)$",
-					"file":         1,
-					"line":         2,
-					"severity":     3,
-					"message":      4
-				}
+				"pattern":          "$gnuplot",
+				"fileLocation":     [ "relative", "${workspaceRoot}" ]
+			}
+		],
+		"problemPatterns": [
+			{
+				"name":             "gnuplot",
+				"regexp":           "^\"(.*)\",\\s*line\\s+(\\d+):(?:\\s*(warning):.*?:)?\\s*(.*)$",
+				"file":             1,
+				"line":             2,
+				"severity":         3,
+				"message":          4
 			}
 		]
 	}
