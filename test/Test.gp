@@ -18,14 +18,19 @@ print MyInc(1)              # Comment after statement
 # *************************************************************************************************
 
 N = 5e2
+N = 5e+2
+N = 5e-2
 N = .5
 N = .5e2
 N = .5e+2
 N = .5e-2
+N = 5.
+N = 5.e2
+N = 5.e+2
+N = 5.e-2
 N = 0.5
 N = 0.5e2
 N = 0.5e+2
-N = 0.5e-2
 N = 0.5e-2
 N = 0xdeadbabe
 N = 0XCAFEface
@@ -109,15 +114,15 @@ print 'NaN: ', NaN
 print 'pi: ', pi
 
 # # Arrays:
-# array A[6]
+# array A[4]
 # A[1] = 1
 # A[2] = { 2.0, 2.0 }
-# A[3] = strlen("four")
-# array B[6] = [ "one", 2.0, A[3] ]
+# A[3] = strlen("three")
+# array B[4] = [ "one", 2, A[3] ]
 
 # # FIXME: Missing array || operator
 # print 'Sizes: ', |A|, |B|
-# do for [i=1:3] {
+# do for [i=1:4] {
 #     print A[i], B[i]
 # }
 

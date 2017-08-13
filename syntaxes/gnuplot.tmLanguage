@@ -1231,8 +1231,10 @@
 					<string>constant.numeric.float.gnuplot</string>
 					<key>match</key>
 					<string>(?x:
-						( \b[0-9]+ )                  # non-optional number
-						( [Ee][+-]?[0-9]+ )           # non-optional exponent
+						# .5e2 and 0.5e2
+						( ((\b[0-9]+)|(?&lt;!\d)) )           # number or not a preceding digit
+						( [.][0-9]+ )                         # non-optional fractional
+						( [Ee][+-]?[0-9]+ )?                  # optional exponent
 					)(cm|in)?\b</string>
 				</dict>
 				<dict>
@@ -1240,10 +1242,13 @@
 					<string>constant.numeric.float.gnuplot</string>
 					<key>match</key>
 					<string>(?x:
-						( ((\b[0-9]+)|(?&lt;!\d)) )   # number or not a digit
-						( [.][0-9]+ )                 # non-optional fractional
-						( [Ee][+-]?[0-9]+ )?          # optional exponent
-					)(cm|in)?\b</string>
+						# 5e2 and 5.e2
+						( \b[0-9]+ )                          # non-optional number
+						(
+							(     ( [Ee][+-]?[0-9]+\b )  ) |  # non-optional exponent
+							( [.] ( [Ee][+-]?[0-9]+\b )? )    # point and optional exponent
+						)
+					)(cm\b|in\b)?</string>
 				</dict>
 				<dict>
 					<key>name</key>
@@ -1295,9 +1300,9 @@
 		<key>DeprecatedScriptArgsLiteral</key>
 		<dict>
 			<key>name</key>
-			<string>invalid.deprecated.scriptargs.gnuplot</string>
+			<string>invalid.illegal.scriptargs.gnuplot</string>
 			<key>match</key>
-			<string>([$]([0-9]|#))</string>
+			<string>([$][0-9#])</string>
 		</dict>
 
 		<!-- SingleQuotedStringLiteral -->
