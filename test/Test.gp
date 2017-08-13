@@ -242,7 +242,7 @@ show functions
 set title 'Some Title'
 set style data histogram
 set linetype 1 linecolor rgb '#a50f15'
-set linetype 2 linecolor rgb "#4292c6"
+set linetype 2 linecolor rgb "0x4292c6"
 set linetype 3 linecolor rgb 'gray50'
 unset x2tics
 unset mxtics

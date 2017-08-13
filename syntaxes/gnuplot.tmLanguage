@@ -83,15 +83,25 @@
 				</dict>
 			</dict>
 
-			<!-- Note: Must be at beginning of line. Consumes everything otherwise. -->
+			<!--
+				Note:
+					(1) Must be at the very start of the line.
+					(2) Gnuplot ignores anything after the end delimiter, including
+					    poperly escaped newlines (which don't continue the line).
+			-->
 			<key>end</key>
-			<string>^(\3)\b</string>
+			<string>^(\3)\b(.*)</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
 					<string>constant.language.datablock.gnuplot</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>invalid.illegal.datablock.gnuplot</string>
 				</dict>
 			</dict>
 
@@ -1387,7 +1397,7 @@
 			<key>name</key>
 			<string>constant.other.placeholder.gnuplot</string>
 			<key>match</key>
-			<string>#(([0-9a-fA-F]{8})|([0-9a-fA-F]{6}))\b</string>
+			<string>\G(0x|#)(([0-9a-fA-F]{8})|([0-9a-fA-F]{6}))\b</string>
 		</dict>
 
 		<!-- EscapedChar -->
