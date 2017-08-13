@@ -55,14 +55,18 @@
 			{
 				"name":             "gnuplot",
 				"owner":            "gnuplot",
-				"fileLocation":     [ "relative", "${workspaceRoot}" ],
-				"pattern": {
-					"regexp":       "^\"(.*)\",\\s*line\\s+(\\d+):(?:\\s*(warning):.*?:)?\\s*(.*)$",
-					"file":         1,
-					"line":         2,
-					"severity":     3,
-					"message":      4
-				}
+				"pattern":          "$gnuplot",
+				"fileLocation":     [ "relative", "${workspaceRoot}" ]
+			}
+		],
+		"problemPatterns": [
+			{
+				"name":             "gnuplot",
+				"regexp":           "^\"(.*)\",\\s*line\\s+(\\d+):(?:\\s*(warning):.*?:)?\\s*(.*)$",
+				"file":             1,
+				"line":             2,
+				"severity":         3,
+				"message":          4
 			}
 		]
 	}
