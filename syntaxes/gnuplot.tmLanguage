@@ -17,7 +17,6 @@
 	<key>fileTypes</key>
 	<array>
 		<string>gp</string>
-		<string>gnu</string>
 		<string>plt</string>
 		<string>plot</string>
 		<string>gnuplot</string>

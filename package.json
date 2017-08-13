@@ -23,7 +23,7 @@
 			{
 				"id":               "gnuplot",
 				"aliases":          [ "Gnuplot", "gnuplot" ],
-				"extensions":       [ ".gp", ".gnu", ".plt", ".plot", ".gnuplot" ],
+				"extensions":       [ ".gp", ".plt", ".plot", ".gnuplot" ],
 				"firstLine":        "^#!/.*\\bgnuplot\\b",
 				"configuration":    "language-configuration.json"
 			}
