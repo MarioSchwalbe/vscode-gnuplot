@@ -115,6 +115,7 @@ print 'pi: ', pi
 # A[3] = strlen("four")
 # array B[6] = [ "one", 2.0, A[3] ]
 
+# # FIXME: Missing array || operator
 # print 'Sizes: ', |A|, |B|
 # do for [i=1:3] {
 #     print A[i], B[i]

@@ -6,6 +6,9 @@ print $0, "$1", "number of args = $#"
 # $n still works here as column index
 plot 'file.dat' thru 1:($2+$3)
 
+# FIXME: Wrong highlight of deprecated $n
+plot 'file.dat' using 1:($2 > 0 ? $2 : 1/0)
+
 # now: if (exists("VARNAME"))
 if (defined(VARNAME)) {
 }

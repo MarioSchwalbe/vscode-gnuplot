@@ -132,8 +132,12 @@
 			<key>begin</key>
 			<string>\b(?x:
 				([A-Za-z_]\w*)\s*                # 1: var name
-				(?=(\[|=(?!\s*=)))               # 2: array opening bracket or assignment
-				# Note: treat index decl and init expression below
+				(?:
+					(\[)\s*                      # 2: opening bracket
+					(.*)\s*                      # 3: expression
+					(\])\s*                      # 4: closing bracket
+				)?
+				(?=(=)(?!\s*=))                  # 5: assignment
 			)</string>
 			<key>beginCaptures</key>
 			<dict>
@@ -145,6 +149,13 @@
 					<array>
 						<dict><key>include</key><string>#InvalidVariableDecl</string></dict>
 						<dict><key>include</key><string>#BuiltinVariable</string></dict>
+					</array>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#Expression</string></dict>
 					</array>
 				</dict>
 			</dict>
@@ -168,7 +179,7 @@
 			<string>\b(?x:
 				(array)\s+                       # 1: array keyword
 				([A-Za-z_]\w*)?                  # 2: var name
-				# Note: treat size decl and init expression below
+				# Note: Handle size decl and init expression inside.
 			)</string>
 			<key>beginCaptures</key>
 			<dict>

@@ -13,6 +13,7 @@ unset border
 unset tics
 unset key
 
+# FIXME: Wrong highlight of attribute defined
 # Setup colors:
 # set palette maxcolors 8
 set palette defined (   \
