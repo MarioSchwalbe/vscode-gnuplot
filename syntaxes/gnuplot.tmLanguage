@@ -410,7 +410,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.flow.gnuplot</string>
+							<string>keyword.control.conditional.gnuplot</string>
 						</dict>
 					</dict>
 
@@ -433,7 +433,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.flow.gnuplot</string>
+							<string>keyword.control.conditional.gnuplot</string>
 						</dict>
 					</dict>
 
@@ -741,9 +741,10 @@
 			<key>patterns</key>
 			<array>
 				<dict><key>include</key><string>#Literal</string></dict>
-				<dict><key>include</key><string>#BuiltinOperator</string></dict>
-				<dict><key>include</key><string>#BuiltinVariable</string></dict>
+				<!-- Note: Order of built-ins is important here ([0:*]). -->
 				<dict><key>include</key><string>#SpecialVariable</string></dict>
+				<dict><key>include</key><string>#BuiltinVariable</string></dict>
+				<dict><key>include</key><string>#BuiltinOperator</string></dict>
 				<dict><key>include</key><string>#TernaryExpression</string></dict>
 				<dict><key>include</key><string>#CallExpression</string></dict>
 				<dict><key>include</key><string>#SummationExpr</string></dict>
@@ -863,6 +864,8 @@
 			<dict>
 				<key>1</key>
 				<dict>
+					<key>name</key>
+					<string>variable.function.gnuplot</string>
 					<key>patterns</key>
 					<array>
 						<dict><key>include</key><string>#BuiltinFunction</string></dict>
@@ -1051,18 +1054,35 @@
 		<!-- SpecialVariable -->
 		<key>SpecialVariable</key>
 		<dict>
-			<key>name</key>
-			<string>constant.language.special.gnuplot</string>
-			<key>match</key>
-			<string>(([@$])[A-Za-z_]\w*)\b</string>
-			<key>captures</key>
-			<dict>
-				<key>2</key>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>(?&lt;=(\[|:))\s*(\*)\s*(?=(:|\]))</string>
+					<key>captures</key>
+					<dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>constant.language.wildcard.gnuplot</string>
+						</dict>
+					</dict>
+				</dict>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.variable.gnuplot</string>
+					<string>constant.language.special.gnuplot</string>
+					<key>match</key>
+					<string>(([@$])[A-Za-z_]\w*)\b</string>
+					<key>captures</key>
+					<dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.variable.gnuplot</string>
+						</dict>
+					</dict>
 				</dict>
-			</dict>
+			</array>
 		</dict>
 
 		<!-- BuiltinFunction: Word list only. @see: CallExpression. -->
