@@ -340,7 +340,6 @@
 						pwd          |
 						refresh      |
 						replot       |
-						undefine     | # has args but nothing to highlight
 						reread
 					)\b</string>
 					<key>beginCaptures</key>
@@ -381,7 +380,7 @@
 						system       |
 						test         |
 						toggle       |
-						update
+						undefine
 					)\b</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -414,7 +413,6 @@
 						</dict>
 					</dict>
 
-					<!-- Note: Include newline for old-style syntax. -->
 					<key>end</key>
 					<string>(?=(\{|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
@@ -437,14 +435,12 @@
 						</dict>
 					</dict>
 
-					<!-- Note: Include newline for old-style syntax. -->
 					<key>end</key>
 					<string>(?=(\{|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 				</dict>
 
 				<!-- Command: Do -->
 				<dict>
-					<!-- Note: Requires for-iteration. -->
 					<key>begin</key>
 					<string>\b(do)\b</string>
 					<key>beginCaptures</key>
@@ -459,6 +455,7 @@
 					<key>end</key>
 					<string>(?=(\{|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
+					<!-- Note: Requires for-iteration. -->
 					<key>patterns</key>
 					<array>
 						<dict><key>include</key><string>#ForIterationExpr</string></dict>
@@ -492,7 +489,7 @@
 				<!-- Command: Set & Unset -->
 				<dict>
 					<key>begin</key>
-					<string>\b(set|unset)\b</string>
+					<string>\b((un)?set)\b</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -516,7 +513,7 @@
 				<!-- Command: Plot & Splot -->
 				<dict>
 					<key>begin</key>
-					<string>\b(plot|splot)\b</string>
+					<string>\b((s)?plot)\b</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -531,9 +528,9 @@
 
 					<key>patterns</key>
 					<array>
+						<dict><key>include</key><string>#ColumnIndexLiteral</string></dict>
 						<dict><key>include</key><string>#PlotModifiers</string></dict>
 						<dict><key>include</key><string>#ForIterationExpr</string></dict>
-						<dict><key>include</key><string>#ColumnIndexLiteral</string></dict>
 						<dict><key>include</key><string>#Expression</string></dict>
 					</array>
 				</dict>
@@ -584,6 +581,7 @@
 						data                |
 						function            |
 						historysize         |
+						macros              |
 						ticslevel           |
 						ticscale            |
 						(style\s+increment\s+\w+)
@@ -597,7 +595,6 @@
 						angles              |
 						arrow               |
 						autoscale           |
-						bars                |
 						border              |
 						boxwidth            |
 						clip                |
@@ -606,23 +603,25 @@
 						contour             |
 						(dash|line)type     |
 						datafile            |
-						decimalsign         |
+						decimal(sign)?      |
 						dgrid3d             |
 						dummy               |
 						encoding            |
+						(error)?bars        |
 						fit                 |
 						fontpath            |
 						format              |
 						grid                |
 						hidden3d            |
 						history             |
+						(iso)?samples       |
+						jitter              |
 						key                 |
 						label               |
 						link                |
 						loadpath            |
 						locale              |
 						logscale            |
-						macros              |
 						mapping             |
 						[lrtb]margin        |
 						margins             |
@@ -645,19 +644,17 @@
 						polar               |
 						print               |
 						psdir               |
-						(iso)?samples       |
 						size                |
 						style               |
 						surface             |
 						table               |
 						terminal            |
 						termoption          |
+						theta               |
 						tics                |
 						timestamp           |
 						timefmt             |
 						title               |
-						theta               |
-						tmargin             |
 						view                |
 						xyplane             |
 						zero                |
@@ -681,6 +678,7 @@
 			<key>match</key>
 			<string>\b(?x:
 				all                         |
+				bind                        |
 				colornames                  |
 				functions                   |
 				plot                        |
@@ -1021,7 +1019,6 @@
 		<dict>
 			<key>patterns</key>
 			<array>
-				<!-- Well actually not built-on anymore. -->
 				<dict>
 					<key>name</key>
 					<string>invalid.deprecated.variable.gnuplot</string>
@@ -1035,7 +1032,6 @@
 						FIT_INDEX
 					)\b</string>
 				</dict>
-				<!-- Now the real built-ins. -->
 				<dict>
 					<key>name</key>
 					<string>support.constant.gnuplot</string>
@@ -1090,7 +1086,6 @@
 		<dict>
 			<key>patterns</key>
 			<array>
-				<!-- Well actually not built-on anymore. -->
 				<dict>
 					<key>name</key>
 					<string>invalid.deprecated.function.gnuplot</string>
@@ -1099,7 +1094,6 @@
 						defined
 					)\b</string>
 				</dict>
-				<!-- Now the real built-ins. -->
 				<dict>
 					<key>name</key>
 					<string>support.function.math.gnuplot</string>
