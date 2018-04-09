@@ -45,4 +45,3 @@ set pm3d hidden3d 1
 set pm3d map
 
 # ***** end of source *****
-

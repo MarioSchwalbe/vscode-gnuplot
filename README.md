@@ -50,4 +50,3 @@ This extension contributes the following settings:
 ### 0.1.0 ###
 
 Initial release.
-

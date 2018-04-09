@@ -292,4 +292,3 @@ splot '++' using 1:2:(fn($1,$2)):(color($1,$2)) with pm3d title "4 data columns 
 import func(x,y) from 'nonexistent:foobar'
 
 # ***** end of source *****
-

@@ -56,4 +56,3 @@ splot x1(u,v), y1(u,v), z1(u,v) with pm3d, \
       x2(u,v), y2(u,v), z2(u,v) with pm3d
 
 # ***** end of source *****
-

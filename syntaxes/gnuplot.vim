@@ -542,4 +542,3 @@ hi def link gnuplotTodo		Todo
 let b:current_syntax = "gnuplot"
 
 " vim: ts=8
-

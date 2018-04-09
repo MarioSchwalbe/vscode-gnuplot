@@ -41,4 +41,3 @@ spiral(t) = log(rotate(t)+1)*1.5
 plot [O:pi*2+O] spiral(t) linecolor rgb FG linewidth 80
 
 # ***** end of source *****
-

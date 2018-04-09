@@ -17,4 +17,3 @@ set linetype 7 linecolor rgb 'gray30'
 set linetype 8 linecolor rgb 'gray50'
 
 # ***** end of source *****
-

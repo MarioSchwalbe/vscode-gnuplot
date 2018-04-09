@@ -58,4 +58,3 @@ do for [i=1:MAX_Y:2] {
 plot for [i=2:NUM_COLS+1] $SLOWDOWN using i:xtic(1) lt i-1
 
 # ***** end of source *****
-
