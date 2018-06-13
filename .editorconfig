@@ -12,13 +12,14 @@ tab_width    = 4
 insert_final_newline     = true
 trim_trailing_whitespace = true
 
-[Makefile]
-tab_width = 8
-
-[*.gp]
-indent_style = spaces
+[{Makefile,Makefile.*,*.mk}]
+indent_style = tab
+tab_width    = 8
 
 [*.md]
 indent_style = spaces
+indent_size  = 2
 trim_trailing_whitespace = false
 
+[*.gp]
+indent_style = spaces
