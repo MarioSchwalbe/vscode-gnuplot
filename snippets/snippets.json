@@ -1,7 +1,25 @@
 {
-	// DOC: https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets
+	// DOCS: https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets
 
-	// summation
+	// settings
+	"term": {
+		"description": "term",
+		"prefix":      "term",
+		"body": [
+			"set terminal ${1:pdfcairo}${2: size ${3:5,3} }",
+			"set output \"${4:${5:plot}.pdf}\"",
+			"$0"
+		],
+		"scope":       "source.gnuplot"
+	},
+	"import": {
+		"prefix":      "import",
+		"body":        "import ${1:function} from '${2:library}'",
+		"description": "import",
+		"scope":       "source.gnuplot"
+	},
+
+	// loops
 	"sum": {
 		"description": "sum",
 		"prefix":      "sum",
@@ -32,25 +50,6 @@
 		"description": "while",
 		"prefix":      "while",
 		"body":        "while (${1:expression}) {\n\t$0\n}",
-		"scope":       "source.gnuplot"
-	},
-
-	"term": {
-		"description": "term",
-		"prefix":      "term",
-		"body": [
-			"set terminal ${1:pdfcairo}${2: size ${3:5,3} }",
-			"set output \"${4:${5:plot}.pdf}\"",
-			"$0"
-		],
-		"scope":       "source.gnuplot"
-	},
-
-	// other
-	"import": {
-		"prefix":      "import",
-		"body":        "import ${1:function} from '${2:library}'",
-		"description": "import",
 		"scope":       "source.gnuplot"
 	}
 }

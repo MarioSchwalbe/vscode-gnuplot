@@ -3,8 +3,8 @@
 <plist version="1.0">
 <dict>
 	<!--
-		DOC: https://www.sublimetext.com/docs/3/scope_naming.html
-		DOC: https://manual.macromates.com/en/language_grammars
+		DOCS: https://www.sublimetext.com/docs/3/scope_naming.html
+		DOCS: https://manual.macromates.com/en/language_grammars
 	-->
 
 	<key>name</key>

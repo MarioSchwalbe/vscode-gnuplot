@@ -40,7 +40,7 @@ set xtics nomirror scale 0
 set ylabel "Slowdown"
 set yrange [0:MAX_Y]
 set ytics  textcolor rgb 'black'
-set ytics  scale 100, 1
+set ytics  scale 120, 1
 set mytics 2
 
 # setup legend
