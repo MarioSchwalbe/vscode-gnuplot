@@ -21,7 +21,7 @@ Example task in `tasks.json`:
     "command":        "${config:gnuplot.gnuplotPath}",
     "args":           [ "${relativeFile}" ],
     "problemMatcher": "$gnuplot"
-    ...
+    // ...
 }
 ```
 
@@ -33,7 +33,7 @@ If the script includes other Gnuplot scripts, it may be useful to set a matching
     "command":        "${config:gnuplot.gnuplotPath}",
     "args":           [ "-e", "set loadpath '${fileDirname}'", "${relativeFile}" ],
     "problemMatcher": "$gnuplot"
-    ...
+    // ...
 }
 ```
 
