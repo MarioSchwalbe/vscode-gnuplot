@@ -32,27 +32,23 @@ set object circle center screen 0.5,0.5 size screen 0.50 behind fillcolor rgb BG
 set object circle center screen 0.5,0.5 size screen 0.46 behind fillcolor rgb BGF
 
 # Setup splot:
-S = 16
+S = 32
 set pm3d depthorder hidden3d
-set view 55, 35, 1.4
-set origin 0.04,0.00
+set view 122, 357, 1.3
+set origin 0.07,-0.02
 set samples S
 set isosamples S,S
 
-# Plot tori:
+# Plot Kuen's surface:
 set parametric
-set urange [-pi:pi]
-set vrange [-pi:pi]
+set urange [-4.5:4.5]
+set vrange [0.05:pi-0.05]
 
-R = 0.35
-x1(u,v) = cos(u)+R*cos(u)*cos(v)
-y1(u,v) = sin(u)+R*sin(u)*cos(v)
-z1(u,v) = R*sin(v)
-x2(u,v) = 1+cos(u)+R*cos(u)*cos(v)
-y2(u,v) = R*sin(v)
-z2(u,v) = sin(u)+R*sin(u)*cos(v)
+R = 1.0
+x(u,v) = 2.*R*(cos(u)+u*sin(u))*sin(v) / (1+u**2.*sin(v)**2)
+y(u,v) = 2.*R*(sin(u)-u*cos(u))*sin(v) / (1+u**2.*sin(v)**2)
+z(u,v) =    R*log(tan(v/2.))+2.*cos(v) / (1+u**2.*sin(v)**2)
 
-splot x1(u,v), y1(u,v), z1(u,v) with pm3d linewidth 2, \
-      x2(u,v), y2(u,v), z2(u,v) with pm3d linewidth 2
+splot x(u,v), y(u,v), z(u,v) with pm3d linewidth 2
 
 # ***** end of source *****
