@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"taskName":        "Plot with Gnuplot",
+			"command":         "${config:gnuplot.gnuplotPath}",
+			"args": [
+				"-e",
+				"set loadpath '${fileDirname}'",
+				"${relativeFile}"
+			],
+			"problemMatcher":  "$gnuplot",
+			"presentation":    { "reveal": "silent" },
+			"group":{
+				"kind":        "build",
+				"isDefault":   true
+			}
+		}
+	]
+}
+

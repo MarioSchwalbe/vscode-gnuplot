@@ -1,9 +1,9 @@
 # Mac OS X stuff
 .DS_Store
 
-# VS Code settings
-.vscode
+# Marketplace
+Makefile
+token.txt
 
 # Test plots
 *.pdf
-

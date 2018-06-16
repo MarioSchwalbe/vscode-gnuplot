@@ -1,2 +1,9 @@
+# Mac OS X stuff
+.DS_Store
+
+# Marketplace
 Makefile
 token.txt
+
+# Test plots
+*.pdf
