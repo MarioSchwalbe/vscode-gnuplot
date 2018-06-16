@@ -1,72 +1,86 @@
 {
-	"name":         "gnuplot",
-	"displayName":  "Gnuplot",
-	"description":  "Gnuplot language support for VS Code",
-	"version":      "1.0.0",
-	"publisher":    "MarioSchwalbe",
-	"icon":         "images/Logo2.png",
-	"license":      "GPLv3",
-	"categories":   [ "Languages", "Snippets" ],
-	"homepage":     "https://github.com/MarioSchwalbe/vscode-gnuplot",
+	"name": "gnuplot",
+	"displayName": "Gnuplot",
+	"description": "Gnuplot language support for VS Code",
+	"version": "1.0.1",
+	"publisher": "MarioSchwalbe",
+	"icon": "images/Logo2.png",
+	"license": "GPLv3",
+	"categories": [
+		"Languages",
+		"Snippets"
+	],
+	"homepage": "https://github.com/MarioSchwalbe/vscode-gnuplot",
 	"bugs": {
-		"url":      "https://github.com/MarioSchwalbe/vscode-gnuplot/issues"
+		"url": "https://github.com/MarioSchwalbe/vscode-gnuplot/issues"
 	},
 	"repository": {
-		"url":      "https://github.com/MarioSchwalbe/vscode-gnuplot.git",
-		"type":     "git"
+		"url": "https://github.com/MarioSchwalbe/vscode-gnuplot.git",
+		"type": "git"
 	},
 	"engines": {
-		"vscode":   "^1.15.0"
+		"vscode": "^1.15.0"
 	},
 	"contributes": {
 		"configuration": {
-			"title":                "Gnuplot Configuration",
+			"title": "Gnuplot Configuration",
 			"properties": {
 				"gnuplot.gnuplotPath": {
-					"type":         "string",
-					"default":      "gnuplot",
-					"description":  "Path to Gnuplot, you can use a custom version of Gnuplot by modifying this setting to include the full path."
+					"type": "string",
+					"default": "gnuplot",
+					"description": "Path to Gnuplot, you can use a custom version of Gnuplot by modifying this setting to include the full path."
 				}
 			}
 		},
 		"languages": [
 			{
-				"id":               "gnuplot",
-				"aliases":          [ "Gnuplot", "gnuplot" ],
-				"extensions":       [ ".gp", ".plt", ".plot", ".gnuplot" ],
-				"firstLine":        "^#!/.*\\bgnuplot\\b",
-				"configuration":    "language-configuration.json"
+				"id": "gnuplot",
+				"aliases": [
+					"Gnuplot",
+					"gnuplot"
+				],
+				"extensions": [
+					".gp",
+					".plt",
+					".plot",
+					".gnuplot"
+				],
+				"firstLine": "^#!/.*\\bgnuplot\\b",
+				"configuration": "language-configuration.json"
 			}
 		],
 		"grammars": [
 			{
-				"language":         "gnuplot",
-				"scopeName":        "source.gnuplot",
-				"path":             "syntaxes/gnuplot.tmLanguage"
+				"language": "gnuplot",
+				"scopeName": "source.gnuplot",
+				"path": "syntaxes/gnuplot.tmLanguage"
 			}
 		],
 		"snippets": [
 			{
-				"language":         "gnuplot",
-				"path":             "snippets/snippets.json"
+				"language": "gnuplot",
+				"path": "snippets/snippets.json"
 			}
 		],
 		"problemMatchers": [
 			{
-				"name":             "gnuplot",
-				"owner":            "gnuplot",
-				"pattern":          "$gnuplot",
-				"fileLocation":     [ "relative", "${workspaceRoot}" ]
+				"name": "gnuplot",
+				"owner": "gnuplot",
+				"pattern": "$gnuplot",
+				"fileLocation": [
+					"relative",
+					"${workspaceRoot}"
+				]
 			}
 		],
 		"problemPatterns": [
 			{
-				"name":             "gnuplot",
-				"regexp":           "^\"(.*)\",\\s*line\\s+(\\d+):(?:\\s*(warning):.*?:)?\\s*(.*)$",
-				"file":             1,
-				"line":             2,
-				"severity":         3,
-				"message":          4
+				"name": "gnuplot",
+				"regexp": "^\"(.*)\",\\s*line\\s+(\\d+):(?:\\s*(warning):.*?:)?\\s*(.*)$",
+				"file": 1,
+				"line": 2,
+				"severity": 3,
+				"message": 4
 			}
 		]
 	}
