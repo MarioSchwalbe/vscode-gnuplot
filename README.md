@@ -27,8 +27,10 @@ If the script includes other Gnuplot scripts, it may be useful to set a matching
 
 ```json
 {
-    "command": "${config:gnuplot.gnuplotPath}",
-    "args":    [ "-e", "set loadpath '${fileDirname}'", "${relativeFile}" ],
+    "taskName":       "Plot with Gnuplot",
+    "command":        "${config:gnuplot.gnuplotPath}",
+    "args":           [ "-e", "set loadpath '${fileDirname}'", "${relativeFile}" ],
+    "problemMatcher": "$gnuplot"
     ...
 }
 ```
