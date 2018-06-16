@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"taskName":        "Plot with Gnuplot",
+			"label":           "Plot with Gnuplot",
 			"command":         "${config:gnuplot.gnuplotPath}",
 			"args": [
 				"-e",
@@ -18,4 +18,3 @@
 		}
 	]
 }
-

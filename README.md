@@ -17,7 +17,7 @@ Example task in `tasks.json`:
 
 ```json
 {
-    "taskName":       "Plot with Gnuplot",
+    "label":          "Plot with Gnuplot",
     "command":        "${config:gnuplot.gnuplotPath}",
     "args":           [ "${relativeFile}" ],
     "problemMatcher": "$gnuplot"
@@ -29,7 +29,7 @@ If the script includes other Gnuplot scripts, it may be useful to set a matching
 
 ```json
 {
-    "taskName":       "Plot with Gnuplot",
+    "label":          "Plot with Gnuplot",
     "command":        "${config:gnuplot.gnuplotPath}",
     "args":           [ "-e", "set loadpath '${fileDirname}'", "${relativeFile}" ],
     "problemMatcher": "$gnuplot"
