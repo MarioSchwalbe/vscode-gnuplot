@@ -1,7 +1,15 @@
+# global ignore list
+syntax: glob
+
 # Mac OS X stuff
 .DS_Store
+._*
 
-# Marketplace
+# backup & tmp files
+.*.swp
+*~
+
+# VSCode marketplace
 Makefile
 token.txt
 
