@@ -1264,7 +1264,7 @@
 				</dict>
 				<dict>
 					<key>name</key>
-					<string>invalid.illegal.dec.gnuplot</string>
+					<string>invalid.illegal.oct.gnuplot</string>
 					<key>match</key>
 					<string>\b(0[0-9]+)(cm|in)?\b</string>
 				</dict>
@@ -1380,7 +1380,7 @@
 		<key>InterpolatedStringLiteral</key>
 		<dict>
 			<key>name</key>
-			<string>string.interpolated.single.gnuplot</string>
+			<string>string.interpolated.gnuplot</string>
 
 			<key>begin</key>
 			<string>(`)</string>
@@ -1416,7 +1416,7 @@
 			<key>name</key>
 			<string>constant.other.placeholder.gnuplot</string>
 			<key>match</key>
-			<string>\G(0x|#)(([0-9a-fA-F]{8})|([0-9a-fA-F]{6}))\b</string>
+			<string>\G(0x|#)(([0-9a-fA-F]{6})|([0-9a-fA-F]{8}))\b</string>
 		</dict>
 
 		<!-- EscapedChar -->
