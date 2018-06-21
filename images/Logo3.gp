@@ -28,8 +28,8 @@ BGF = hsv2rgb(0.55, 1, 0.7)
 
 # Draw background circles:
 set style fill solid
-set object circle center screen 0.5,0.5 size screen 0.50 behind fillcolor rgb BGC
-set object circle center screen 0.5,0.5 size screen 0.46 behind fillcolor rgb BGF
+set object circle center screen 0.5,0.5 size screen 0.49 behind fillcolor rgb BGC
+set object circle center screen 0.5,0.5 size screen 0.45 behind fillcolor rgb BGF
 
 # Setup splot:
 S = 32
@@ -49,6 +49,6 @@ x(u,v) = 2.*R*(cos(u)+u*sin(u))*sin(v) / (1+u**2.*sin(v)**2)
 y(u,v) = 2.*R*(sin(u)-u*cos(u))*sin(v) / (1+u**2.*sin(v)**2)
 z(u,v) =    R*log(tan(v/2.))+2.*cos(v) / (1+u**2.*sin(v)**2)
 
-splot x(u,v), y(u,v), z(u,v) with pm3d linewidth 2
+splot x(u,v), y(u,v), z(u,v) with pm3d linewidth 3
 
 # ***** end of source *****
