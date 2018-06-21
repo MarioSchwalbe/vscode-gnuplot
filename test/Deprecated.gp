@@ -7,7 +7,7 @@ print $0, "$1", "number of args = $#"
 plot 'file.dat' thru 1:($2+$3)
 
 # FIXME: Wrong highlighting of column index $n
-plot 'file.dat' using 1:($2 > 0 ? $2 : 1/0)
+plot 'file.dat' using 1:($2 > 0 ? $2 : $2/0)
 
 # now: if (exists("VARNAME"))
 if (defined(VARNAME)) {
@@ -31,17 +31,19 @@ set function ...
 # now: set history size
 set historysize ...
 
+# now: set linetype
+set style increment user
+
 # now: set xyplane
 set ticslevel
 
 # now: set tics scale
 set ticscale
 
-# now: set linetype
-set style increment user
-
-# FIXME: Flag pm3d options as deprecated
+# now: ??
 set pm3d hidden3d 1
 set pm3d map
+set pm3d transparent
+set pm3d solid
 
 # ***** end of source *****

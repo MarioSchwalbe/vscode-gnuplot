@@ -42,7 +42,7 @@ N = 123456789
 # Not a number but an expression
 N = 0x1e-2
 
-# FIXME: Missing support for complex number literals
+# TODO: Missing support for complex number literals
 N = { 1, 2 }
 
 # Some strings
@@ -120,7 +120,7 @@ print 'pi: ', pi
 # A[3] = strlen("three")
 # array B[4] = [ "one", 2, A[3] ]
 
-# # FIXME: Missing array || operator
+# # TODO: Missing array || operator
 # print 'Sizes: ', |A|, |B|
 # do for [i=1:4] {
 #     print A[i], B[i]
@@ -136,7 +136,7 @@ strlen = strlen('Hello World')
 print strlen
 print strlen('Hello World')
 
-# FIXME: Flag functions as invalid:
+# TODO: Flag functions as invalid:
 strlen(x) = x
 print strlen('Called user-defined function')
 

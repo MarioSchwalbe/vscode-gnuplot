@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<!--
@@ -247,7 +247,7 @@
 			<dict>
 				<key>1</key>
 				<dict>
-					<!-- FIXME: Highlight invalid function names. -->
+					<!-- TODO: Highlight invalid function names. -->
 					<key>name</key>
 					<string>entity.name.function.gnuplot</string>
 					<key>patterns</key>
@@ -482,6 +482,36 @@
 					<array>
 						<dict><key>include</key><string>#ExtraShowOptions</string></dict>
 						<dict><key>include</key><string>#SetUnsetOptions</string></dict>
+						<dict><key>include</key><string>#Expression</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: set pm3d -->
+				<dict>
+					<key>begin</key>
+					<string>\b(set)(?=\s+pm3d)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>name</key>
+							<string>invalid.deprecated.options.gnuplot</string>
+							<key>match</key>
+							<string>\b(hidden3d|map|transparent|solid)\b</string>
+						</dict>
+						<dict><key>include</key><string>#SetUnsetOptions</string></dict>
+						<dict><key>include</key><string>#ForIterationExpr</string></dict>
 						<dict><key>include</key><string>#Expression</string></dict>
 					</array>
 				</dict>
@@ -1278,14 +1308,15 @@
 		</dict>
 
 		<!--
-		FIXME: No complex number literal. I use rainbow brackets anyway.
+		TODO: No complex number literal. I use rainbow brackets anyway.
 		 -->
 
 		<!-- ColumnIndexLiteral -->
 		<key>ColumnIndexLiteral</key>
 		<dict>
 			<key>name</key>
-			<string>constant.language.column.gnuplot</string>
+			<!-- <string>constant.language.columnindex.gnuplot</string> -->
+			<string>support.constant.columnindex.gnuplot</string>
 			<key>match</key>
 			<string>([$][0-9]+)\b</string>
 		</dict>

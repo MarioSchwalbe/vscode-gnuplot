@@ -30,8 +30,6 @@ MatMult         3.866186        3.409035        3.901018        3.876722        
 
 END_OF_DATA
 
-print $SLOWDOWN
-
 set title 'AMD E-450 \@ 1.65GHz'
 call '_slowdown.gp' ARG0[*:strlen(ARG0)-3]
 print "done"
