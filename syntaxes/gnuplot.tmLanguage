@@ -194,6 +194,7 @@
 				(array)\s+                       # 1: array keyword
 				([A-Za-z_]\w*)?                  # 2: var name
 				# Note: Handle size decl and init expression inside.
+				# TODO: Properly annotate brackets.
 			)</string>
 			<key>beginCaptures</key>
 			<dict>
@@ -240,8 +241,7 @@
 						([A-Za-z_]\w*)\s*        # 6: other args
 					)*
 					(\))                         # 7: closing parens
-				)\s*
-				(?=(=)(?!\s*=))                  # 8: assignment
+				)
 			)</string>
 			<key>beginCaptures</key>
 			<dict>
@@ -576,6 +576,13 @@
 						<dict>
 							<key>name</key>
 							<string>keyword.control.import.gnuplot</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict><key>include</key><string>#FunctionDecl</string></dict>
+							</array>
 						</dict>
 						<key>3</key>
 						<dict>

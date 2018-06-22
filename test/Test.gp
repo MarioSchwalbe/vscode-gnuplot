@@ -113,18 +113,18 @@ print 'GPVAL_TERM: ', GPVAL_TERM
 print 'NaN: ', NaN
 print 'pi: ', pi
 
-# # Arrays:
-# array A[4]
-# A[1] = 1
-# A[2] = { 2.0, 2.0 }
-# A[3] = strlen("three")
-# array B[4] = [ "one", 2, A[3] ]
+# Arrays:
+array A[4]
+A[1] = 1
+A[2] = { 2.0, 2.0 }
+A[3] = strlen("three")
+array B[4] = [ "one", 2, A[3] ]
 
-# # TODO: Missing array || operator
-# print 'Sizes: ', |A|, |B|
-# do for [i=1:4] {
-#     print A[i], B[i]
-# }
+# TODO: Missing array || operator
+print 'Sizes: ', |A|, |B|
+do for [i=1:4] {
+    print A[i], B[i]
+}
 
 # # Flagged as invalid:
 # GPVAL_XX = 0
@@ -202,6 +202,7 @@ print print("Test2")
 #
 # if-else & while commands
 #
+if = -1
 if ((if = 0) == 0) {
     print "if is 0: ", if
 }
