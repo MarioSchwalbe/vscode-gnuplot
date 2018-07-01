@@ -436,6 +436,44 @@
 					</array>
 				</dict>
 
+				<!-- Command: Import -->
+				<dict>
+					<key>begin</key>
+					<!-- Note: No trailing space required. -->
+					<string>\b(import)\s(.+)\s(from)</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.import.gnuplot</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict><key>include</key><string>#FunctionDecl</string></dict>
+							</array>
+						</dict>
+						<key>3</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.import.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
+
+					<key>patterns</key>
+					<array>
+						<!-- Note: Arbitrary expressions not allowed. -->
+						<dict><key>include</key><string>#SingleQuotedStringLiteral</string></dict>
+						<dict><key>include</key><string>#DoubleQuotedStringLiteral</string></dict>
+						<dict><key>include</key><string>#InvalidWord</string></dict>
+					</array>
+				</dict>
+
 				<!-- Command: Reset -->
 				<dict>
 					<key>begin</key>
@@ -556,30 +594,6 @@
 					</array>
 				</dict>
 
-				<!-- Command: Show -->
-				<dict>
-					<key>begin</key>
-					<string>\b(show)\b</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.other.command.gnuplot</string>
-						</dict>
-					</dict>
-
-					<key>end</key>
-					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
-
-					<key>patterns</key>
-					<array>
-						<dict><key>include</key><string>#ExtraShowOptions</string></dict>
-						<dict><key>include</key><string>#SetUnsetOptions</string></dict>
-						<dict><key>include</key><string>#Expression</string></dict>
-					</array>
-				</dict>
-
 				<!-- Command: set pm3d -->
 				<dict>
 					<key>begin</key>
@@ -634,6 +648,30 @@
 					</array>
 				</dict>
 
+				<!-- Command: Show -->
+				<dict>
+					<key>begin</key>
+					<string>\b(show)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#ExtraShowOptions</string></dict>
+						<dict><key>include</key><string>#SetUnsetOptions</string></dict>
+						<dict><key>include</key><string>#Expression</string></dict>
+					</array>
+				</dict>
+
 				<!-- Command: Plot & Splot -->
 				<dict>
 					<key>begin</key>
@@ -656,44 +694,6 @@
 						<dict><key>include</key><string>#PlotModifiers</string></dict>
 						<dict><key>include</key><string>#ForIterationExpr</string></dict>
 						<dict><key>include</key><string>#Expression</string></dict>
-					</array>
-				</dict>
-
-				<!-- Command: Import -->
-				<dict>
-					<key>begin</key>
-					<!-- Note: No trailing space required. -->
-					<string>\b(import)\s(.+)\s(from)</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>1</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.import.gnuplot</string>
-						</dict>
-						<key>2</key>
-						<dict>
-							<key>patterns</key>
-							<array>
-								<dict><key>include</key><string>#FunctionDecl</string></dict>
-							</array>
-						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>keyword.control.import.gnuplot</string>
-						</dict>
-					</dict>
-
-					<key>end</key>
-					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
-
-					<key>patterns</key>
-					<array>
-						<!-- Note: Arbitrary expressions not allowed. -->
-						<dict><key>include</key><string>#SingleQuotedStringLiteral</string></dict>
-						<dict><key>include</key><string>#DoubleQuotedStringLiteral</string></dict>
-						<dict><key>include</key><string>#InvalidWord</string></dict>
 					</array>
 				</dict>
 			</array>
