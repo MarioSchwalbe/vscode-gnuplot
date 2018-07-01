@@ -45,6 +45,7 @@
 		<dict><key>include</key><string>#VariableDecl</string></dict>
 		<dict><key>include</key><string>#ArrayDecl</string></dict>
 		<dict><key>include</key><string>#FunctionDecl</string></dict>
+		<dict><key>include</key><string>#ShellCommand</string></dict>
 		<dict><key>include</key><string>#Command</string></dict>
 	</array>
 
@@ -60,6 +61,9 @@
 		<!-- DataBlock -->
 		<key>DataBlock</key>
 		<dict>
+			<key>name</key>
+			<string>meta.datablock.gnuplot</string>
+
 			<key>begin</key>
 			<string>(?x:
 				([$][A-Za-z_]\w*)\s*             # 1: var name
@@ -107,8 +111,9 @@
 
 			<key>patterns</key>
 			<array>
-				<!-- Usual line comments as in data files do work here. -->
 				<dict><key>include</key><string>#LineComment</string></dict>
+				<dict><key>include</key><string>#NumberLiteral</string></dict>
+				<dict><key>include</key><string>#DoubleQuotedStringLiteral</string></dict>
 			</array>
 		</dict>
 
@@ -311,6 +316,34 @@
 # *************************************************************************************************
 -->
 
+		<!-- ShellCommand -->
+		<key>ShellCommand</key>
+		<dict>
+			<key>begin</key>
+			<string>(!)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.other.shell.gnuplot</string>
+				</dict>
+			</dict>
+
+			<key>end</key>
+			<string>(?=(#|\\(?!\n)|(?&lt;!\\)\n$))</string>
+
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>name</key>
+					<string>string.unquoted</string>
+					<key>match</key>
+					<string>([^#]|\\(?=\n))</string>
+				</dict>
+			</array>
+		</dict>
+
 		<!-- Command -->
 		<key>Command</key>
 		<dict>
@@ -340,7 +373,8 @@
 						pwd          |
 						refresh      |
 						replot       |
-						reread
+						reread       |
+						shell
 					)\b</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -353,6 +387,11 @@
 
 					<key>end</key>
 					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#InvalidWord</string></dict>
+					</array>
 				</dict>
 
 				<!-- Simple commands with arguments -->
@@ -373,14 +412,11 @@
 						printerr     |
 						quit         |
 						raise        |
-						reset        |
 						save         |
-						shell        |
 						stats        |
 						system       |
 						test         |
-						toggle       |
-						undefine
+						toggle
 					)\b</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -397,6 +433,64 @@
 					<key>patterns</key>
 					<array>
 						<dict><key>include</key><string>#Expression</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: Reset -->
+				<dict>
+					<key>begin</key>
+					<string>\b(reset)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>name</key>
+							<string>support.class.reset.gnuplot</string>
+							<key>match</key>
+							<string>\b(bind|error(state)?|session)\b</string>
+						</dict>
+						<dict><key>include</key><string>#InvalidWord</string></dict>
+					</array>
+				</dict>
+
+				<!-- Command: Undefine -->
+				<dict>
+					<key>begin</key>
+					<string>\b(undefine)\b</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.command.gnuplot</string>
+						</dict>
+					</dict>
+
+					<key>end</key>
+					<string>(?=(;|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
+
+					<key>patterns</key>
+					<array>
+						<dict><key>include</key><string>#BuiltinVariable</string></dict>
+						<dict><key>include</key><string>#BuiltinFunction</string></dict>
+						<dict>
+							<key>name</key>
+							<string>source.gnuplot</string>
+							<key>match</key>
+							<string>(?&lt;=\s)([$]?[A-Za-z_]\w*\*?)(?=\s)</string>
+						</dict>
+						<dict><key>include</key><string>#InvalidWord</string></dict>
 					</array>
 				</dict>
 
@@ -455,9 +549,9 @@
 					<key>end</key>
 					<string>(?=(\{|#|\\(?!\n)|(?&lt;!\\)\n$))</string>
 
-					<!-- Note: Requires for-iteration. -->
 					<key>patterns</key>
 					<array>
+						<!-- Note: Requires for-iteration. -->
 						<dict><key>include</key><string>#ForIterationExpr</string></dict>
 					</array>
 				</dict>
@@ -599,6 +693,7 @@
 						<!-- Note: Arbitrary expressions not allowed. -->
 						<dict><key>include</key><string>#SingleQuotedStringLiteral</string></dict>
 						<dict><key>include</key><string>#DoubleQuotedStringLiteral</string></dict>
+						<dict><key>include</key><string>#InvalidWord</string></dict>
 					</array>
 				</dict>
 			</array>
@@ -755,6 +850,15 @@
 					<string>\b(newhist(ogram)?)\b</string>
 				</dict>
 			</array>
+		</dict>
+
+		<!-- InvalidWord -->
+		<key>InvalidWord</key>
+		<dict>
+			<key>name</key>
+			<string>invalid.illegal.gnuplot</string>
+			<key>match</key>
+			<string>([^;#\\[:space:]]+)</string>
 		</dict>
 
 <!--

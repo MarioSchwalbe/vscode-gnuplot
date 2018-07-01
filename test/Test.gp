@@ -147,7 +147,7 @@ print strlen('Called user-defined function')
 print "\nExpressions:"
 
 # data blocks
-$DATA << END        # works
+$DATA << END    # works
     1 2 3
     4 5 6
 END
@@ -183,8 +183,17 @@ print "\nCommands:"
 # Simple commands
 #
 pwd
-reset
-undefine N*
+reset session
+undefine func2 strlen
+undefine GPFUN_foo FOO*
+undefine var1 var* -200 func
+
+! hostname # ls -l
+system "hostname"
+system = system("hostname")
+print system
+hostname = 0
+print ! hostname # ls -l
 
 print = "Test1"
 print print ; print print
@@ -256,7 +265,7 @@ unset mxtics
 # set with for-iteration
 set for [i=1:9] for [j=1:sum [k=1:3] k] label i*10+j sprintf("%d", i*10+j) at i,j
 
-exit # quit here
+exit    # quit here
 
 #
 # Plot commands

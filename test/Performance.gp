@@ -32,6 +32,5 @@ END_OF_DATA
 
 set title 'AMD E-450 \@ 1.65GHz'
 call '_slowdown.gp' ARG0[*:strlen(ARG0)-3]
-print "done"
 
 # ***** end of source *****
