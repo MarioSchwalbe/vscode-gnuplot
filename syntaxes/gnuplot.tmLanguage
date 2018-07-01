@@ -402,7 +402,6 @@
 						call         |
 						eval         |
 						exit         |
-						fit          |
 						help         |
 						history      |
 						load         |
@@ -672,10 +671,10 @@
 					</array>
 				</dict>
 
-				<!-- Command: Plot & Splot -->
+				<!-- Command: Fit, Plot & Splot -->
 				<dict>
 					<key>begin</key>
-					<string>\b((s)?plot)\b</string>
+					<string>\b(fit|(s)?plot)\b</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>

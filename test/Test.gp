@@ -270,6 +270,9 @@ exit    # quit here
 #
 # Plot commands
 #
+fit a*x + b*y 'surface.dat' using 1:2:3 via a,b
+fit [*:*][yaks=*:*] a*x+b*yaks 'surface.dat' using 1:2:3 via a,b
+
 plot sin(x) with lines
 plot $DATA using 1:3 with points, $DATA using 1:2 with impulses
 
