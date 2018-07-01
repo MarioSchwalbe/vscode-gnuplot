@@ -1194,10 +1194,10 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=(\[|:))\s*(\*)\s*(?=(:|\]))</string>
+					<string>(?&lt;=[\[:=])\s*(\*)\s*(?=[:\]])</string>
 					<key>captures</key>
 					<dict>
-						<key>2</key>
+						<key>1</key>
 						<dict>
 							<key>name</key>
 							<string>constant.language.wildcard.gnuplot</string>
