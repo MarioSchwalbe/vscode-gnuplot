@@ -1,7 +1,9 @@
 Gnuplot Language Support for Visual Studio Code
 ===============================================
 
-Extension to provide (basic) Gnuplot language support for VS Code.
+Extension to provide Gnuplot language support for VS Code.
+
+![syntax](https://github.com/MarioSchwalbe/vscode-gnuplot/raw/master/images/Syntax.png)
 
 Features
 --------
@@ -11,8 +13,6 @@ Supports:
 - Syntax highlighting
 - Problem matcher (and pattern) for build tasks
 - Snippets
-
-![syntax](https://github.com/MarioSchwalbe/vscode-gnuplot/raw/master/images/Syntax.png)
 
 To make use of the problem matcher, the task should pass the relative file path to Gnuplot.
 Example task in `tasks.json`:
