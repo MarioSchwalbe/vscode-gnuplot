@@ -8,9 +8,11 @@ Features
 
 Supports:
 
-+ Syntax highlighting
-+ Problem matcher (and pattern) for build tasks
-+ Snippets
+- Syntax highlighting
+- Problem matcher (and pattern) for build tasks
+- Snippets
+
+![syntax](https://github.com/MarioSchwalbe/vscode-gnuplot/raw/master/images/Syntax.png)
 
 To make use of the problem matcher, the task should pass the relative file path to Gnuplot.
 Example task in `tasks.json`:
