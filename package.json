@@ -2,7 +2,7 @@
 	"name": "gnuplot",
 	"displayName": "Gnuplot",
 	"description": "Gnuplot language support for VS Code",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"publisher": "MarioSchwalbe",
 	"icon": "images/Logo2.png",
 	"license": "GPLv3",
