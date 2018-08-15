@@ -3,6 +3,9 @@ Gnuplot Language Support for Visual Studio Code
 
 Extension to provide Gnuplot language support for VS Code.
 
+Screenshot
+----------
+
 ![syntax](https://github.com/MarioSchwalbe/vscode-gnuplot/raw/master/images/Syntax.png)
 
 Features
@@ -44,7 +47,7 @@ Extension Settings
 
 This extension contributes the following settings:
 
-+ `gnuplot.gnuplotPath`: Path to the Gnuplot executable. Not used by this extension directly, but
+- `gnuplot.gnuplotPath`: Path to the Gnuplot executable. Not used by this extension directly, but
   useful in `tasks.json` if it's checked into repositories. Use a command such as
   `${config:gnuplot.gnuplotPath}`.
 
