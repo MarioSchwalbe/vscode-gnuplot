@@ -6,14 +6,16 @@ Extension to provide Gnuplot language support for VS Code.
 Screenshot
 ----------
 
-![syntax](https://github.com/MarioSchwalbe/vscode-gnuplot/raw/master/images/Syntax.png)
+<!-- ![syntax](images/Syntax.png) -->
+<!-- ![syntax](images/Syntax72.png) -->
+![syntax](https://github.com/MarioSchwalbe/vscode-gnuplot/raw/master/images/Syntax72.png)
 
 Features
 --------
 
 Supports:
 
-- Syntax highlighting
+- Grammar-based syntax highlighting
 - Problem matcher (and pattern) for build tasks
 - Snippets
 
