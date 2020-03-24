@@ -6,6 +6,7 @@ syntax: glob
 ._*
 
 # backup & tmp files
+__*
 .*.swp
 *~
 
